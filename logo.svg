@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ring" x1="40" y1="40" x2="472" y2="472" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1F74"/>
+      <stop offset="1" stop-color="#7D2BE0"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="170" y1="100" x2="342" y2="294" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#285DCC"/>
+      <stop offset="1" stop-color="#6A2EEA"/>
+    </linearGradient>
+    <linearGradient id="textGlow" x1="194" y1="150" x2="319" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9A66"/>
+      <stop offset="1" stop-color="#FF5ACD"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="236" stroke="url(#ring)" stroke-width="20"/>
+  <circle cx="256" cy="256" r="214" stroke="url(#ring)" stroke-opacity="0.35" stroke-width="3"/>
+
+  <path d="M256 92C219 117 183 122 150 128V234C150 291 192 334 256 361C320 334 362 291 362 234V128C329 122 293 117 256 92Z" fill="url(#shield)" stroke="#192E87" stroke-width="8"/>
+  <text x="256" y="246" text-anchor="middle" font-size="110" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="url(#textGlow)">FAM</text>
+
+  <text x="256" y="420" text-anchor="middle" font-size="42" font-family="Arial, Helvetica, sans-serif" letter-spacing="2" fill="#111A66">FAM CỦA MINH A</text>
+</svg>

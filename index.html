@@ -69,11 +69,29 @@
       }
 
       .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
         font-weight: 700;
         letter-spacing: 0.2px;
       }
 
-      .brand small {
+      .brand-logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(111, 124, 255, 0.7);
+        box-shadow: 0 8px 22px rgba(30, 64, 175, 0.28);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .brand-text {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .brand-text small {
         display: block;
         font-size: 12px;
         color: var(--muted);
@@ -461,10 +479,13 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="container">
+        <div class="container">
         <div class="brand">
-          Fam của Minh A
-          <small>Dịch vụ số premium • hỗ trợ nhanh • uy tín</small>
+          <img class="brand-logo" src="./logo.svg" alt="Logo Fam của Minh A" />
+          <div class="brand-text">
+            Fam của Minh A
+            <small>Dịch vụ số premium • hỗ trợ nhanh • uy tín</small>
+          </div>
         </div>
         <nav class="nav">
           <a href="#products">Sản phẩm</a>
