@@ -80,6 +80,23 @@
         font-weight: 500;
       }
 
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-logo {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(58, 208, 255, 0.45);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
       .nav {
         display: flex;
         gap: 10px;
@@ -441,6 +458,10 @@
           gap: 10px;
         }
 
+        .brand-wrap {
+          width: 100%;
+        }
+
         .hero {
           padding-top: 52px;
         }
@@ -462,9 +483,12 @@
   <body>
     <header class="topbar">
       <div class="container">
-        <div class="brand">
-          Fam của Minh A
-          <small>Dịch vụ số premium • hỗ trợ nhanh • uy tín</small>
+        <div class="brand-wrap">
+          <img class="brand-logo" src="assets/fam-logo.svg" alt="Logo Fam của Minh A" loading="eager" />
+          <div class="brand">
+            Fam của Minh A
+            <small>Dịch vụ số premium • hỗ trợ nhanh • uy tín</small>
+          </div>
         </div>
         <nav class="nav">
           <a href="#products">Sản phẩm</a>
