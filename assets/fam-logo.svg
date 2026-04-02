@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="80" y1="80" x2="432" y2="432" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C4BFF"/>
+      <stop offset="1" stop-color="#8A2DFF"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="170" y1="130" x2="340" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#56D4FF"/>
+      <stop offset="1" stop-color="#D15BFF"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="246" stroke="url(#g1)" stroke-width="16"/>
+  <circle cx="256" cy="256" r="228" stroke="#14205F" stroke-opacity="0.8" stroke-width="8"/>
+
+  <path d="M256 90L380 150V250C380 320 329 386 256 422C183 386 132 320 132 250V150L256 90Z" fill="#102158"/>
+  <path d="M256 112L360 163V248C360 307 318 361 256 394C194 361 152 307 152 248V163L256 112Z" fill="url(#g2)" fill-opacity="0.35"/>
+  <path d="M198 306V203H314V229H232V247H294V271H232V306H198Z" fill="#FF8A59"/>
+  <path d="M274 306L256 265H238L220 306H187L236 203H277L327 306H274ZM247 241H265L256 218L247 241Z" fill="#FF8A59"/>
+
+  <text x="256" y="452" text-anchor="middle" fill="#0F1E66" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">FAM CỦA MINH A</text>
+</svg>
