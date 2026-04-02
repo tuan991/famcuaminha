@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fam của Minh A | Dịch vụ số premium</title>
+    <meta
+      name="description"
+      content="Fam của Minh A - Website dịch vụ số chuyên nghiệp: YouTube Premium, CapCut Pro, Canva Business, ChatGPT Plus và các gói công nghệ số khác."
+    />
+    <style>
+      :root {
+        --bg: #070b14;
+        --bg-soft: #0d1424;
+        --card: #101a2f;
+        --card-2: #121f39;
+        --line: rgba(148, 163, 184, 0.2);
+        --text: #e6edf9;
+        --muted: #9fb0d1;
+        --primary: #3ad0ff;
+        --primary-strong: #00b8ff;
+        --accent: #6f7cff;
+        --success: #2dd4bf;
+        --danger: #f87171;
+        --radius-xl: 26px;
+        --radius-lg: 18px;
+        --radius-md: 12px;
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 10% 10%, rgba(58, 208, 255, 0.13), transparent 30%),
+          radial-gradient(circle at 85% 15%, rgba(111, 124, 255, 0.14), transparent 35%), var(--bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1140px, 92%);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(7, 11, 20, 0.7);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+      }
+
+      .topbar .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .brand small {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .nav {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .nav a,
+      .btn {
+        border: 1px solid transparent;
+        background: transparent;
+        color: var(--text);
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--primary-strong));
+        color: #01111a;
+        box-shadow: 0 10px 30px rgba(0, 184, 255, 0.28);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+
+      .btn-ghost {
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .hero {
+        padding: 72px 0 54px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 28px;
+      }
+
+      .hero-card,
+      .surface {
+        border: 1px solid var(--line);
+        background: linear-gradient(160deg, rgba(16, 26, 47, 0.88), rgba(10, 17, 32, 0.9));
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-content {
+        padding: 34px;
+      }
+
+      .chip {
+        display: inline-flex;
+        padding: 8px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(58, 208, 255, 0.35);
+        background: rgba(58, 208, 255, 0.1);
+        color: #b7f2ff;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      h1 {
+        margin-top: 16px;
+        font-size: clamp(30px, 5vw, 54px);
+      }
+
+      .sub {
+        margin-top: 16px;
+        color: var(--muted);
+        line-height: 1.8;
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        margin-top: 24px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .stats {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .stat label {
+        display: block;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .stat strong {
+        display: block;
+        margin-top: 2px;
+      }
+
+      .hero-panel {
+        padding: 24px;
+      }
+
+      .mini-title {
+        color: #9cecff;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .domain {
+        margin-top: 6px;
+        font-size: clamp(20px, 4vw, 30px);
+        font-weight: 700;
+      }
+
+      .product-mini {
+        margin-top: 18px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .product-mini button {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+        border-radius: var(--radius-lg);
+        padding: 12px 14px;
+        color: var(--text);
+        text-align: left;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .product-mini button:hover {
+        border-color: rgba(58, 208, 255, 0.45);
+        transform: translateY(-2px);
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .section-title {
+        margin-bottom: 24px;
+      }
+
+      .section-title p {
+        margin: 0 0 8px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: #9cecff;
+        font-weight: 700;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .grid.products {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .product-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: linear-gradient(165deg, rgba(18, 31, 57, 0.9), rgba(12, 22, 40, 0.92));
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        transition: 0.28s ease;
+        animation: fadeUp 0.5s ease both;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(58, 208, 255, 0.45);
+      }
+
+      .product-card .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .badge {
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        background: rgba(58, 208, 255, 0.16);
+        color: #a8f0ff;
+      }
+
+      .price {
+        font-size: 13px;
+        color: #c9d7ef;
+      }
+
+      .product-card ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      .card-actions {
+        margin-top: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+
+      .panel-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .reason,
+      .testimonial,
+      .faq-item,
+      .form-wrap {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 18px;
+      }
+
+      .testimonial p,
+      .reason p,
+      .faq-item p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .faq-item {
+        display: grid;
+        gap: 8px;
+      }
+
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 18px;
+      }
+
+      form {
+        display: grid;
+        gap: 10px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border: 1px solid rgba(148, 163, 184, 0.32);
+        background: rgba(8, 13, 24, 0.7);
+        border-radius: 12px;
+        padding: 12px;
+        color: var(--text);
+        font: inherit;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .contact-buttons {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .footer {
+        padding: 24px 0 36px;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .hero-grid,
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .grid.products {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .panel-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .topbar .container {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+
+        .hero {
+          padding-top: 52px;
+        }
+
+        .hero-content,
+        .hero-panel {
+          padding: 20px;
+        }
+
+        .grid.products,
+        .stats,
+        .panel-grid,
+        .card-actions {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <div class="brand">
+          Fam của Minh A
+          <small>Dịch vụ số premium • hỗ trợ nhanh • uy tín</small>
+        </div>
+        <nav class="nav">
+          <a href="#products">Sản phẩm</a>
+          <a href="#pricing">Bảng giá</a>
+          <a href="#testimonials">Phản hồi</a>
+          <a href="#contact">Liên hệ</a>
+          <button class="btn btn-primary" id="nav-buy">Mua ngay</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <article class="hero-card hero-content reveal">
+            <span class="chip">Website bán dịch vụ số chuyên nghiệp</span>
+            <h1>Fam của Minh A - Giải pháp tài khoản premium đáng tin cậy, chốt đơn nhanh.</h1>
+            <p class="sub">
+              Chuyên cung cấp YouTube Premium, CapCut Pro, Canva Business, ChatGPT Plus và nhiều sản phẩm công nghệ số khác.
+              Quy trình rõ ràng, tư vấn dễ hiểu, hỗ trợ nhanh qua Zalo/Facebook/hotline.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-scroll="#products">Xem sản phẩm</button>
+              <button class="btn btn-ghost" data-scroll="#contact">Liên hệ Zalo</button>
+              <button class="btn btn-ghost" id="facebook-btn">Nhắn Facebook</button>
+            </div>
+            <div class="stats">
+              <div class="stat"><label>Tốc độ hỗ trợ</label><strong>5–15 phút</strong></div>
+              <div class="stat"><label>Quy trình</label><strong>Đơn giản, minh bạch</strong></div>
+              <div class="stat"><label>Độ tin cậy</label><strong>Cam kết rõ trước khi mua</strong></div>
+              <div class="stat"><label>Phong cách</label><strong>Thân thiện, chuyên nghiệp</strong></div>
+            </div>
+          </article>
+          <aside class="hero-card hero-panel reveal">
+            <p class="mini-title">Tên miền thương hiệu</p>
+            <div class="domain">famcuaminha.indevs.in</div>
+            <div class="product-mini" id="hero-mini-products"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="products">
+        <div class="container">
+          <div class="section-title reveal">
+            <p>Dịch vụ nổi bật</p>
+            <h2>Danh sách sản phẩm có thể mở rộng dễ dàng</h2>
+          </div>
+          <div class="grid products" id="product-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="pricing" style="background: rgba(255, 255, 255, 0.02); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line)">
+        <div class="container">
+          <div class="section-title reveal">
+            <p>Bảng giá & quy trình</p>
+            <h2>Giá hợp lý - tư vấn đúng nhu cầu - chốt nhanh</h2>
+          </div>
+          <div class="panel-grid reveal">
+            <article class="reason">
+              <h3>1) Chọn gói</h3>
+              <p>Khách chọn sản phẩm cần dùng hoặc để lại nhu cầu, bạn tư vấn gói phù hợp nhất.</p>
+            </article>
+            <article class="reason">
+              <h3>2) Báo giá rõ</h3>
+              <p>Báo giá theo thời hạn/gói, không mập mờ, có hướng dẫn trước khi thanh toán.</p>
+            </article>
+            <article class="reason">
+              <h3>3) Kích hoạt nhanh</h3>
+              <p>Sau xác nhận, tiến hành hỗ trợ kích hoạt và kiểm tra lại tình trạng tài khoản.</p>
+            </article>
+            <article class="reason">
+              <h3>4) Hậu mãi</h3>
+              <p>Luôn có kênh hỗ trợ Zalo/Facebook/hotline để xử lý phát sinh nhanh chóng.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reasons">
+        <div class="container">
+          <div class="section-title reveal">
+            <p>Lý do chọn bên tôi</p>
+            <h2>Uy tín cá nhân + quy trình rõ ràng giúp tăng niềm tin</h2>
+          </div>
+          <div class="panel-grid reveal">
+            <article class="reason"><h3>Hỗ trợ nhanh</h3><p>Phản hồi nhanh qua Zalo/Facebook, ưu tiên xử lý yêu cầu ngay.</p></article>
+            <article class="reason"><h3>Tư vấn rõ ràng</h3><p>Giải thích từng gói dịch vụ và quyền lợi trước khi khách quyết định.</p></article>
+            <article class="reason"><h3>Giá hợp lý</h3><p>Tối ưu chi phí theo nhu cầu thật, tránh mua gói không cần thiết.</p></article>
+            <article class="reason"><h3>Dễ nâng cấp</h3><p>Có thể bổ sung sản phẩm mới, feedback, blog và automation bán hàng về sau.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="testimonials" style="background: rgba(255,255,255,0.02)">
+        <div class="container">
+          <div class="section-title reveal">
+            <p>Phản hồi khách hàng</p>
+            <h2>Trải nghiệm thực tế giúp tăng tỷ lệ chốt đơn</h2>
+          </div>
+          <div class="panel-grid reveal">
+            <article class="testimonial">
+              <h3>Ngọc Trâm • Chủ shop online</h3>
+              <p>“Tư vấn rất dễ hiểu, chốt gói Canva Teams nhanh và dùng ổn định. Cách làm việc rõ ràng nên rất yên tâm.”</p>
+            </article>
+            <article class="testimonial">
+              <h3>Minh Quân • Creator</h3>
+              <p>“CapCut Pro kích hoạt nhanh, hỗ trợ nhiệt tình. Có gì phát sinh đều được phản hồi sớm.”</p>
+            </article>
+            <article class="testimonial">
+              <h3>Hà My • Nhân viên văn phòng</h3>
+              <p>“Nhờ tư vấn đúng nhu cầu nên tiết kiệm hơn, dùng ChatGPT Plus và YouTube Premium khá hiệu quả.”</p>
+            </article>
+            <article class="testimonial">
+              <h3>Bảo Long • Freelancer</h3>
+              <p>“Website gọn, chuyên nghiệp, thao tác liên hệ nhanh. Mình chốt đơn trong một lần trao đổi.”</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-title reveal">
+            <p>FAQ</p>
+            <h2>Câu hỏi thường gặp</h2>
+          </div>
+          <div class="grid reveal">
+            <article class="faq-item"><h3>Website này dùng để làm gì?</h3><p>Đây là landing page giúp khách xem nhanh dịch vụ số, bảng giá, phản hồi và kênh liên hệ.</p></article>
+            <article class="faq-item"><h3>Tôi muốn mua thì bắt đầu từ đâu?</h3><p>Nhấn “Mua ngay” hoặc “Liên hệ Zalo”, gửi nhu cầu và bạn sẽ được tư vấn gói phù hợp trước khi chốt.</p></article>
+            <article class="faq-item"><h3>Có thể thêm sản phẩm mới không?</h3><p>Có. Danh mục được thiết kế dạng dữ liệu, bạn chỉ cần thêm object sản phẩm là website hiển thị ngay.</p></article>
+            <article class="faq-item"><h3>Có thể gắn domain riêng và mở rộng lâu dài không?</h3><p>Có. Website phù hợp để phát triển thương hiệu cá nhân dài hạn và mở rộng chức năng về sau.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact" style="border-top: 1px solid var(--line)">
+        <div class="container contact-layout">
+          <article class="form-wrap reveal">
+            <p class="mini-title">Form liên hệ</p>
+            <h2 style="margin-top: 8px">Để lại thông tin để được tư vấn nhanh</h2>
+            <p class="sub" style="margin-top: 8px">Phong cách làm việc: rõ ràng - thân thiện - ưu tiên hiệu quả cho khách hàng.</p>
+            <form id="contact-form">
+              <input type="text" name="name" placeholder="Họ và tên" required />
+              <input type="text" name="phone" placeholder="Số điện thoại / Zalo" required />
+              <select name="service" required>
+                <option value="">Chọn dịch vụ quan tâm</option>
+                <option>YouTube Premium</option>
+                <option>CapCut Pro</option>
+                <option>Canva Business / Teams</option>
+                <option>ChatGPT Plus</option>
+                <option>Sản phẩm khác</option>
+              </select>
+              <textarea name="message" placeholder="Nhu cầu của bạn (thời hạn, số lượng, mục đích sử dụng)..."></textarea>
+              <button class="btn btn-primary" type="submit">Gửi yêu cầu tư vấn</button>
+            </form>
+          </article>
+          <article class="form-wrap reveal">
+            <p class="mini-title">Liên hệ nhanh</p>
+            <h2 style="margin-top: 8px">Fam của Minh A</h2>
+            <p class="sub" style="margin-top: 8px">Hỗ trợ nhanh - tư vấn rõ ràng - giá hợp lý - quy trình đơn giản.</p>
+            <div class="contact-buttons">
+              <a class="btn btn-primary" href="https://zalo.me/0346635146" target="_blank" rel="noopener">Liên hệ Zalo</a>
+              <a class="btn btn-ghost" href="tel:0346635146">Gọi hotline: 0346 635 146</a>
+              <a class="btn btn-ghost" href="#" id="contact-fb">Nhắn Facebook</a>
+              <a class="btn btn-ghost" href="mailto:hello@famcuaminha.indevs.in">Email: hello@famcuaminha.indevs.in</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      © <span id="year"></span> Fam của Minh A — Website dịch vụ số theo phong cách chuyên nghiệp, hiện đại, tối ưu chuyển đổi.
+    </footer>
+
+    <script>
+      const products = [
+        {
+          id: 'youtube',
+          icon: '▶',
+          name: 'YouTube Premium',
+          badge: 'Phổ biến',
+          description: 'Nghe nhạc và xem video mượt mà, tối ưu cho nhu cầu giải trí hằng ngày.',
+          price: 'Từ 89.000đ/tháng',
+          details: ['Không quảng cáo gián đoạn', 'Hỗ trợ setup nhanh', 'Tư vấn gói cá nhân/nhóm']
+        },
+        {
+          id: 'capcut',
+          icon: '✦',
+          name: 'CapCut Pro',
+          badge: 'Creator',
+          description: 'Tối ưu quy trình edit video ngắn cho TikTok, Reels, Shorts và quảng cáo.',
+          price: 'Từ 129.000đ/tháng',
+          details: ['Phù hợp content creator', 'Tiết kiệm thời gian dựng', 'Hỗ trợ sử dụng ban đầu']
+        },
+        {
+          id: 'canva',
+          icon: '◈',
+          name: 'Canva Business / Teams',
+          badge: 'Thiết kế',
+          description: 'Thiết kế banner, CV, slide, post mạng xã hội chuyên nghiệp và đồng bộ nhóm.',
+          price: 'Từ 149.000đ/tháng',
+          details: ['Dành cho sale/marketing', 'Team dễ cộng tác', 'Kho template đa dạng']
+        },
+        {
+          id: 'chatgpt',
+          icon: '◎',
+          name: 'ChatGPT Plus',
+          badge: 'AI',
+          description: 'Hỗ trợ viết nội dung, học tập, lên ý tưởng và nâng hiệu suất công việc mỗi ngày.',
+          price: 'Từ 499.000đ/tháng',
+          details: ['Dành cho học tập & công việc', 'Tư vấn cách ứng dụng thực tế', 'Hỗ trợ sau mua']
+        }
+      ];
+
+      const productGrid = document.querySelector('#product-grid');
+      const heroMini = document.querySelector('#hero-mini-products');
+
+      const renderProducts = () => {
+        productGrid.innerHTML = products
+          .map(
+            (item) => `
+            <article id="${item.id}" class="product-card">
+              <div class="head">
+                <span class="badge">${item.badge}</span>
+                <span class="price">${item.price}</span>
+              </div>
+              <h3>${item.icon} ${item.name}</h3>
+              <p style="color: var(--muted); margin:0; line-height:1.7">${item.description}</p>
+              <ul>
+                ${item.details.map((d) => `<li>${d}</li>`).join('')}
+              </ul>
+              <div class="card-actions">
+                <a class="btn btn-primary" href="https://zalo.me/0346635146" target="_blank" rel="noopener">Mua ngay</a>
+                <button class="btn btn-ghost" data-detail="${item.id}">Xem chi tiết</button>
+              </div>
+            </article>`
+          )
+          .join('');
+
+        heroMini.innerHTML = products
+          .map(
+            (item) => `
+          <button data-scroll="#${item.id}">
+            <strong>${item.icon} ${item.name}</strong>
+            <div style="margin-top:4px;color:var(--muted);font-size:13px">${item.price}</div>
+          </button>`
+          )
+          .join('');
+      };
+
+      renderProducts();
+
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target.matches('[data-scroll]')) {
+          const selector = target.getAttribute('data-scroll');
+          const el = document.querySelector(selector);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        if (target.matches('[data-detail]')) {
+          const id = target.getAttribute('data-detail');
+          const selected = products.find((p) => p.id === id);
+          if (selected) {
+            alert(`${selected.name}\n\n${selected.description}\n\nGiá tham khảo: ${selected.price}\nLiên hệ Zalo để nhận tư vấn gói phù hợp.`);
+          }
+        }
+      });
+
+      const fbAlert = () => alert('Bạn chỉ cần thay link Facebook cá nhân/fanpage vào nút này để sử dụng thực tế.');
+      document.querySelector('#facebook-btn').addEventListener('click', fbAlert);
+      document.querySelector('#contact-fb').addEventListener('click', (e) => {
+        e.preventDefault();
+        fbAlert();
+      });
+
+      document.querySelector('#nav-buy').addEventListener('click', () => {
+        document.querySelector('#contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.querySelector('#contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = new FormData(e.currentTarget);
+        const name = form.get('name');
+        alert(`Cảm ơn ${name}! Yêu cầu của bạn đã được ghi nhận. Bạn sẽ được phản hồi sớm qua Zalo/điện thoại.`);
+        e.currentTarget.reset();
+      });
+
+      document.querySelector('#year').textContent = new Date().getFullYear();
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
