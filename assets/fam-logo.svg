@@ -1,22 +1,68 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="g1" x1="80" y1="80" x2="432" y2="432" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2C4BFF"/>
-      <stop offset="1" stop-color="#8A2DFF"/>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 160) rotate(35) scale(900)">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#F3F5FA"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="120" y1="100" x2="900" y2="920" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111E8F"/>
+      <stop offset="0.5" stop-color="#1D2EC0"/>
+      <stop offset="1" stop-color="#7B1BE0"/>
     </linearGradient>
-    <linearGradient id="g2" x1="170" y1="130" x2="340" y2="340" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#56D4FF"/>
-      <stop offset="1" stop-color="#D15BFF"/>
+    <linearGradient id="shield" x1="360" y1="210" x2="690" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1E3FAE"/>
+      <stop offset="0.5" stop-color="#2B53C6"/>
+      <stop offset="1" stop-color="#6E2AD7"/>
+    </linearGradient>
+    <linearGradient id="glyph" x1="375" y1="300" x2="680" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF7D5E"/>
+      <stop offset="1" stop-color="#FFA865"/>
+    </linearGradient>
+    <linearGradient id="glyphInner" x1="382" y1="307" x2="673" y2="583" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1F3B97"/>
+      <stop offset="1" stop-color="#4120A0"/>
     </linearGradient>
   </defs>
 
-  <circle cx="256" cy="256" r="246" stroke="url(#g1)" stroke-width="16"/>
-  <circle cx="256" cy="256" r="228" stroke="#14205F" stroke-opacity="0.8" stroke-width="8"/>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
 
-  <path d="M256 90L380 150V250C380 320 329 386 256 422C183 386 132 320 132 250V150L256 90Z" fill="#102158"/>
-  <path d="M256 112L360 163V248C360 307 318 361 256 394C194 361 152 307 152 248V163L256 112Z" fill="url(#g2)" fill-opacity="0.35"/>
-  <path d="M198 306V203H314V229H232V247H294V271H232V306H198Z" fill="#FF8A59"/>
-  <path d="M274 306L256 265H238L220 306H187L236 203H277L327 306H274ZM247 241H265L256 218L247 241Z" fill="#FF8A59"/>
+  <circle cx="512" cy="512" r="474" stroke="url(#ring)" stroke-width="18"/>
+  <circle cx="512" cy="512" r="452" stroke="#090E6E" stroke-width="10"/>
 
-  <text x="256" y="452" text-anchor="middle" fill="#0F1E66" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">FAM CỦA MINH A</text>
+  <path d="M512 180L710 252V430C710 542 628 654 512 715C396 654 314 542 314 430V252L512 180Z" fill="#13276D"/>
+  <path d="M512 202L684 264V430C684 532 610 630 512 682C414 630 340 532 340 430V264L512 202Z" fill="url(#shield)"/>
+  <path d="M512 202V682C610 630 684 532 684 430V264L512 202Z" fill="#6926C9" fill-opacity="0.28"/>
+
+  <g>
+    <path d="M404 492V325H555L546 352H432V392H506L497 417H432V492H404Z" fill="url(#glyph)"/>
+    <path d="M439 479L450 446L527 308H552L544 339L506 446H540L532 479H497L492 506H465L470 479H439ZM479 446H497L510 403L479 446Z" fill="url(#glyph)"/>
+    <path d="M570 352L576 325H653L645 352H621L602 492H574L593 352H570Z" fill="url(#glyph)"/>
+    <path d="M412 483V334H545L539 346H423V396H496L491 408H423V483H412Z" fill="url(#glyphInner)" fill-opacity="0.95"/>
+    <path d="M449 470L458 443L529 319H545L539 335L502 443H536L530 470H495L491 492H474L478 470H449ZM487 443H504L519 395L487 443Z" fill="url(#glyphInner)" fill-opacity="0.95"/>
+    <path d="M579 346L584 334H646L641 346H617L599 483H586L604 346H579Z" fill="url(#glyphInner)" fill-opacity="0.95"/>
+  </g>
+
+  <text x="512" y="790" text-anchor="middle" fill="#101A67" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="700" letter-spacing="2">FAM CỦA MINH A</text>
+
+  <g fill="#0D1561" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="500">
+    <circle cx="250" cy="840" r="22" fill="#372CA4"/>
+    <text x="290" y="853">ChatGPT</text>
+
+    <rect x="330" y="820" width="64" height="40" rx="12" fill="#4A2BC1"/>
+    <polygon points="355,830 355,850 375,840" fill="#FF7D5E"/>
+    <text x="310" y="912">YouTube</text>
+
+    <rect x="456" y="834" width="62" height="34" rx="8" fill="#4A2BC1"/>
+    <polygon points="477,842 477,860 495,851" fill="#FF7D5E"/>
+    <text x="455" y="912">Netflix</text>
+
+    <circle cx="613" cy="837" r="12" fill="#4A2BC1"/>
+    <circle cx="643" cy="837" r="12" fill="#4A2BC1"/>
+    <rect x="599" y="850" width="58" height="30" rx="8" fill="#4A2BC1"/>
+    <text x="610" y="912">Capcut</text>
+
+    <path d="M760 826L792 858" stroke="#4A2BC1" stroke-width="10" stroke-linecap="round"/>
+    <path d="M742 862L760 844" stroke="#4A2BC1" stroke-width="10" stroke-linecap="round"/>
+    <text x="775" y="853">Canvas</text>
+  </g>
 </svg>
