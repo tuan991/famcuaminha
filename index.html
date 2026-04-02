@@ -124,6 +124,20 @@
         background: rgba(255, 255, 255, 0.08);
       }
 
+      .shop-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background: #111;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+
+      .shop-btn:hover {
+        opacity: 0.9;
+      }
+
       .hero {
         padding: 72px 0 54px;
       }
@@ -471,7 +485,7 @@
           <a href="#pricing">Bảng giá</a>
           <a href="#testimonials">Phản hồi</a>
           <a href="#contact">Liên hệ</a>
-          <button class="btn btn-primary" id="nav-buy">Mua ngay</button>
+          <a href="shop.html" class="shop-btn" id="nav-buy">Vào Shop</a>
         </nav>
       </div>
     </header>
@@ -698,7 +712,7 @@
                 ${item.details.map((d) => `<li>${d}</li>`).join('')}
               </ul>
               <div class="card-actions">
-                <a class="btn btn-primary" href="https://zalo.me/0346635146" target="_blank" rel="noopener">Mua ngay</a>
+                <a class="btn btn-primary" href="shop.html?product=${item.id}">Mua ngay</a>
                 <button class="btn btn-ghost" data-detail="${item.id}">Xem chi tiết</button>
               </div>
             </article>`
@@ -743,9 +757,6 @@
         fbAlert();
       });
 
-      document.querySelector('#nav-buy').addEventListener('click', () => {
-        document.querySelector('#contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
 
       document.querySelector('#contact-form').addEventListener('submit', (e) => {
         e.preventDefault();
