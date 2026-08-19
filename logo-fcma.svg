@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">FCMA logo</title>
+  <desc id="desc">Futuristic FCMA technology tree logo in cyan and green.</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="58%">
+      <stop offset="0%" stop-color="#10243a"/>
+      <stop offset="58%" stop-color="#050b16"/>
+      <stop offset="100%" stop-color="#01040b"/>
+    </radialGradient>
+    <linearGradient id="cyanGreen" x1="14%" y1="24%" x2="88%" y2="80%">
+      <stop offset="0%" stop-color="#35ff65"/>
+      <stop offset="48%" stop-color="#10f5ff"/>
+      <stop offset="100%" stop-color="#0d8dff"/>
+    </linearGradient>
+    <linearGradient id="letters" x1="8%" y1="35%" x2="95%" y2="68%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="38%" stop-color="#dce9f7"/>
+      <stop offset="56%" stop-color="#04f0ff"/>
+      <stop offset="100%" stop-color="#6bff45"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <g fill="none" opacity=".78">
+    <circle cx="512" cy="512" r="393" stroke="#07395b" stroke-width="3"/>
+    <circle cx="512" cy="512" r="370" stroke="url(#cyanGreen)" stroke-width="8" stroke-linecap="round" stroke-dasharray="930 290" filter="url(#glow)"/>
+    <circle cx="512" cy="512" r="336" stroke="#0fdbff" stroke-width="2" stroke-dasharray="8 26" opacity=".45"/>
+  </g>
+
+  <g stroke="url(#cyanGreen)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none" filter="url(#glow)">
+    <path d="M512 456V244"/>
+    <path d="M512 314l-62-62M512 326l66-70M512 382l-92-3-54-54M512 388l96-2 70-62"/>
+    <path d="M482 454v-82l-88-74M542 456v-86l90-78"/>
+    <path d="M512 456l-48 62v102M512 456l48 62v102"/>
+    <path d="M464 520H366l-54-54M560 520h100l58-54"/>
+    <circle cx="450" cy="252" r="10"/><circle cx="578" cy="256" r="10"/><circle cx="366" cy="325" r="9"/><circle cx="678" cy="324" r="9"/>
+    <circle cx="312" cy="466" r="10"/><circle cx="718" cy="466" r="10"/>
+  </g>
+
+  <g fill="#65ff4f" stroke="#b8ff8b" stroke-width="3" filter="url(#glow)">
+    <ellipse cx="475" cy="220" rx="28" ry="72" transform="rotate(-28 475 220)"/>
+    <ellipse cx="562" cy="214" rx="26" ry="69" transform="rotate(28 562 214)"/>
+    <ellipse cx="383" cy="305" rx="24" ry="67" transform="rotate(-58 383 305)"/>
+    <ellipse cx="649" cy="302" rx="24" ry="67" transform="rotate(58 649 302)"/>
+    <ellipse cx="335" cy="415" rx="19" ry="53" transform="rotate(-76 335 415)"/>
+    <ellipse cx="694" cy="413" rx="19" ry="53" transform="rotate(76 694 413)"/>
+  </g>
+
+  <g fill="none" stroke="#063c5d" stroke-width="4" opacity=".75">
+    <path d="M42 516h140l58-44h95M982 516H840l-58-44h-95"/>
+    <path d="M78 602h188l48-32h78M946 602H758l-48-32h-78"/>
+    <path d="M410 764v96M452 734v156M512 704v204M572 734v156M614 764v96"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <text x="512" y="650" text-anchor="middle" font-family="Arial Black, Montserrat, Arial, sans-serif" font-size="186" font-weight="900" letter-spacing="-18" fill="url(#letters)" stroke="#07233a" stroke-width="8">FCMA</text>
+    <text x="512" y="725" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="35" font-weight="700" letter-spacing="22" fill="#f6fbff">AI AUTOMATION</text>
+    <text x="512" y="786" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="27" font-weight="700" letter-spacing="16" fill="#8cff55">EMPOWERING DIGITAL GROWTH</text>
+  </g>
+</svg>
