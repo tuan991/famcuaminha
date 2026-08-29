@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://famcuaminha.indevs.in/sitemap.xml
