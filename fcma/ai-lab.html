@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI Lab — 7 công cụ AI miễn phí | FCMA</title>
+  <meta name="description" content="Trải nghiệm 7 công cụ AI miễn phí ngay trên trình duyệt: Chat GPT, viết nội dung, sinh email, viết quảng cáo, tạo prompt, kế hoạch kinh doanh, tạo CV. Không cần đăng ký, không cần API key."/>
+  <link rel="canonical" href="https://famcuaminha.indevs.in/ai-lab.html"/>
+  <link rel="icon" type="image/svg+xml" href="logo-fcma.png"/>
+  <link rel="alternate icon" type="image/png" href="favicon-256.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css"/>
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="assets/app.js?v2" defer></script>
+
+  <style>
+    .lab-nav {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding: 8px; border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(20px);
+      overflow-x: auto;
+    }
+    .lab-nav button {
+      padding: 8px 14px; border-radius: 999px;
+      background: transparent; border: 1px solid transparent;
+      color: var(--muted); font-size: 14px; font-weight: 500;
+      white-space: nowrap;
+      transition: 0.2s;
+    }
+    .lab-nav button:hover { color: var(--text); }
+    .lab-nav button.active {
+      background: var(--grad-primary);
+      color: #0a0d1a; font-weight: 600;
+    }
+    .tool-panel { display: none; }
+    .tool-panel.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0); } }
+
+    .tool-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+    .tool-card {
+      background: rgba(255,255,255,.02);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
+    }
+    .tool-card h3 { font-size: 18px; margin-bottom: 4px; }
+    .tool-card .sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+
+    .output {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      min-height: 260px;
+      font-size: 14.5px; line-height: 1.7;
+      color: var(--text-2);
+      white-space: pre-wrap;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .output.empty {
+      display: grid; place-items: center; text-align: center;
+      color: var(--muted-2); font-size: 14px;
+    }
+    .output.loading::after {
+      content: '▊';
+      animation: blink 1s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .output-actions {
+      display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+    }
+
+    /* Chat tool */
+    .chat-container { display: flex; flex-direction: column; height: 560px; }
+    .chat-body { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 12px; }
+    .chat-msg { padding: 10px 14px; border-radius: 14px; font-size: 14.5px; max-width: 80%; line-height: 1.55; white-space: pre-wrap; }
+    .chat-msg.user { background: var(--grad-primary); color: #0a0d1a; align-self: flex-end; }
+    .chat-msg.bot { background: rgba(255,255,255,.05); border: 1px solid var(--line); align-self: flex-start; }
+    .chat-input { display: flex; gap: 8px; margin-top: 12px; }
+    .chat-input input { flex: 1; }
+
+    @media (max-width: 900px) {
+      .tool-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <section style="padding: 140px 0 40px;">
+    <div class="container-sm text-center">
+      <span class="eyebrow reveal">AI Lab · Miễn phí 100%</span>
+      <h1 class="reveal d1" style="margin-top: 20px;">7 công cụ AI <span class="gradient-text">chạy trực tiếp trên trình duyệt</span></h1>
+      <p class="lead reveal d2" style="margin: 20px auto 0;">Không đăng ký, không API key, không tracking. Kết quả lưu riêng tư trong LocalStorage của bạn.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom: 96px;">
+    <div class="container">
+      <div class="lab-nav reveal" id="labNav">
+        <button data-tab="chat" class="active">💬 Chat AI</button>
+        <button data-tab="content">📝 Viết nội dung</button>
+        <button data-tab="email">✉ Sinh email</button>
+        <button data-tab="ad">📣 Viết quảng cáo</button>
+        <button data-tab="prompt">✨ Tạo prompt</button>
+        <button data-tab="business">💼 Kế hoạch KD</button>
+        <button data-tab="cv">📄 Tạo CV</button>
+      </div>
+
+      <!-- === CHAT AI === -->
+      <div class="tool-panel active" id="tab-chat">
+        <div class="tool-card" style="margin-top:24px">
+          <h3>Chat với FCMA AI</h3>
+          <div class="sub">Trợ lý đa năng cho công việc, học tập, ý tưởng — trả lời tiếng Việt tự nhiên.</div>
+          <div class="chat-container">
+            <div class="chat-body" id="chatBody">
+              <div class="chat-msg bot">Chào bạn 👋 Tôi có thể giúp gì hôm nay? Ví dụ:
+• Viết 1 email xin lỗi khách chuyên nghiệp
+• Tóm tắt một chủ đề bất kỳ
+• Sinh ý tưởng nội dung 7 ngày
+• Giải thích khái niệm khó</div>
+            </div>
+            <form class="chat-input" id="chatForm">
+              <input type="text" id="chatInput" placeholder="Nhập câu hỏi..." autocomplete="off"/>
+              <button type="submit" class="btn btn-primary">Gửi →</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- === CONTENT === -->
+      <div class="tool-panel" id="tab-content">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Viết nội dung</h3>
+            <div class="sub">Bài viết SEO, post social, blog dài, thông cáo báo chí.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field"><label>Chủ đề *</label><input type="text" id="c_topic" placeholder="VD: 5 lợi ích của AI Chatbot cho shop online"/></div>
+              <div class="grid grid-2" style="gap:12px">
+                <div class="field">
+                  <label>Loại nội dung</label>
+                  <select id="c_type">
+                    <option>Bài blog SEO 1500 từ</option>
+                    <option>Post Facebook</option>
+                    <option>Bài LinkedIn</option>
+                    <option>Kịch bản TikTok 30s</option>
+                    <option>Thông cáo báo chí</option>
+                    <option>Bài viết chuyên sâu 3000 từ</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Giọng điệu</label>
+                  <select id="c_tone">
+                    <option>Chuyên nghiệp</option>
+                    <option>Thân thiện</option>
+                    <option>Hài hước nhẹ</option>
+                    <option>Truyền cảm hứng</option>
+                    <option>Trang trọng</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field"><label>Từ khoá SEO (tuỳ chọn)</label><input type="text" id="c_kw" placeholder="AI chatbot, tự động hoá"/></div>
+              <button class="btn btn-primary btn-block" id="c_run">✨ Tạo nội dung</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Kết quả</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="c_out">Điền form bên trái và nhấn "Tạo nội dung"</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="c_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="c_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === EMAIL === -->
+      <div class="tool-panel" id="tab-email">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Sinh Email chuyên nghiệp</h3>
+            <div class="sub">Cold email, follow-up, welcome, xin lỗi, chào mời hợp tác.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field">
+                <label>Loại email</label>
+                <select id="e_type">
+                  <option>Cold email B2B</option>
+                  <option>Follow-up sau báo giá</option>
+                  <option>Welcome khách mới</option>
+                  <option>Xin lỗi & khắc phục</option>
+                  <option>Chào mời hợp tác</option>
+                  <option>Cảm ơn khách hàng</option>
+                  <option>Thông báo tính năng mới</option>
+                </select>
+              </div>
+              <div class="field"><label>Người nhận (chức vụ / ngành)</label><input type="text" id="e_to" placeholder="VD: CEO công ty F&B 20-50 nhân viên"/></div>
+              <div class="field"><label>Mục tiêu email</label><textarea id="e_goal" placeholder="VD: Đặt lịch demo AI chatbot cho quán ăn"></textarea></div>
+              <button class="btn btn-primary btn-block" id="e_run">✉ Sinh email</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Email</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="e_out">Nhập thông tin bên trái</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="e_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="e_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === AD === -->
+      <div class="tool-panel" id="tab-ad">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Viết Quảng cáo</h3>
+            <div class="sub">Meta Ads, Google Ads, TikTok Ads — 3-5 phương án A/B test.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field"><label>Sản phẩm / dịch vụ *</label><input type="text" id="a_prod" placeholder="VD: Khoá học tiếng Anh online"/></div>
+              <div class="field"><label>Đối tượng</label><input type="text" id="a_aud" placeholder="VD: Nhân viên VP 25-35 tuổi, thu nhập 15-25tr"/></div>
+              <div class="grid grid-2" style="gap:12px">
+                <div class="field">
+                  <label>Kênh</label>
+                  <select id="a_ch">
+                    <option>Meta (Facebook/Instagram) Ads</option>
+                    <option>Google Search Ads</option>
+                    <option>TikTok Ads</option>
+                    <option>YouTube Ads</option>
+                    <option>Zalo Ads</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Mục tiêu</label>
+                  <select id="a_goal">
+                    <option>Chốt đơn ngay</option>
+                    <option>Đăng ký thử miễn phí</option>
+                    <option>Tăng nhận diện</option>
+                    <option>Thu lead form</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-block" id="a_run">📣 Tạo quảng cáo</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Phương án A/B</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="a_out">Nhập sản phẩm để bắt đầu</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="a_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="a_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === PROMPT === -->
+      <div class="tool-panel" id="tab-prompt">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Prompt Engineer</h3>
+            <div class="sub">Chuyển ý tưởng thô thành prompt chuyên nghiệp có cấu trúc, role, constraint, output format.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field"><label>Ý tưởng ban đầu *</label><textarea id="p_idea" placeholder="VD: tôi muốn AI viết bài SEO về du lịch Đà Lạt"></textarea></div>
+              <div class="field">
+                <label>Model đích</label>
+                <select id="p_model">
+                  <option>ChatGPT / Claude (text)</option>
+                  <option>Midjourney (image)</option>
+                  <option>Runway / Sora (video)</option>
+                  <option>Coding AI (Cursor/Copilot)</option>
+                </select>
+              </div>
+              <button class="btn btn-primary btn-block" id="p_run">✨ Tối ưu prompt</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Prompt tối ưu</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="p_out">Nhập ý tưởng bên trái</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="p_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="p_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === BUSINESS === -->
+      <div class="tool-panel" id="tab-business">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Kế hoạch kinh doanh</h3>
+            <div class="sub">Business Model Canvas + phân tích thị trường + roadmap 6 tháng.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field"><label>Mô tả ý tưởng kinh doanh *</label><textarea id="b_idea" placeholder="VD: Mở quán cà phê workspace cho freelancer ở quận 3"></textarea></div>
+              <div class="field"><label>Vốn dự kiến</label><input type="text" id="b_cap" placeholder="VD: 300 triệu"/></div>
+              <button class="btn btn-primary btn-block" id="b_run">💼 Lập kế hoạch</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Kế hoạch</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="b_out">Nhập ý tưởng bên trái</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="b_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="b_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- === CV === -->
+      <div class="tool-panel" id="tab-cv">
+        <div class="tool-layout">
+          <div class="tool-card">
+            <h3>Tạo CV chuyên nghiệp</h3>
+            <div class="sub">Viết CV chuẩn ATS, tối ưu keyword theo vị trí ứng tuyển.</div>
+            <div class="grid" style="gap:14px">
+              <div class="field"><label>Họ và tên</label><input type="text" id="cv_name" placeholder="Nguyễn Văn A"/></div>
+              <div class="grid grid-2" style="gap:12px">
+                <div class="field"><label>Vị trí ứng tuyển *</label><input type="text" id="cv_pos" placeholder="Marketing Manager"/></div>
+                <div class="field"><label>Số năm kinh nghiệm</label><input type="text" id="cv_yr" placeholder="5 năm"/></div>
+              </div>
+              <div class="field"><label>Kinh nghiệm & kỹ năng chính</label><textarea id="cv_skills" placeholder="Chạy Meta Ads, SEO, quản lý team 5 người, Python..."></textarea></div>
+              <button class="btn btn-primary btn-block" id="cv_run">📄 Tạo CV</button>
+            </div>
+          </div>
+          <div class="tool-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">CV Markdown</h3>
+              <span class="badge">GPT-4o mini</span>
+            </div>
+            <div class="output empty" id="cv_out">Điền thông tin bên trái</div>
+            <div class="output-actions">
+              <button class="btn btn-ghost btn-sm" data-copy="cv_out">Copy</button>
+              <button class="btn btn-ghost btn-sm" data-save="cv_out">Lưu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" style="border-top: 1px solid var(--line);">
+    <div class="container">
+      <div class="glass reveal" style="padding: 48px; border-radius: 24px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center;">
+        <div>
+          <span class="eyebrow">Nâng cấp lên bản doanh nghiệp</span>
+          <h2 style="margin-top: 16px;">Cần AI Lab riêng cho công ty?</h2>
+          <p class="lead mt-2">FCMA triển khai AI workspace nội bộ: agent chuyên ngành, dữ liệu riêng, quản trị người dùng, log audit đầy đủ.</p>
+        </div>
+        <div style="text-align: right;">
+          <a class="btn btn-primary btn-lg" href="contact.html?service=agent">Nhận tư vấn →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Tab switch
+    const nav = document.getElementById('labNav');
+    nav.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-tab]');
+      if (!btn) return;
+      nav.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      history.replaceState(null, '', '#' + tab);
+    });
+    // Init from hash
+    const hash = location.hash.replace('#','');
+    if (hash) {
+      const b = nav.querySelector(`[data-tab="${hash}"]`);
+      if (b) b.click();
+    }
+
+    // Generic run helper
+    async function runAI(prompt, outEl, sysPrompt = null) {
+      outEl.classList.remove('empty');
+      outEl.classList.add('loading');
+      outEl.textContent = '';
+      try {
+        if (!window.puter) throw new Error('AI đang khởi động, thử lại sau 3s.');
+        const messages = [];
+        if (sysPrompt) messages.push({ role: 'system', content: sysPrompt });
+        messages.push({ role: 'user', content: prompt });
+
+        // Try streaming if available
+        const resp = await puter.ai.chat(messages, { model: 'gpt-4o-mini', stream: true });
+        if (resp && resp[Symbol.asyncIterator]) {
+          for await (const part of resp) {
+            if (part?.text) {
+              outEl.textContent += part.text;
+              outEl.scrollTop = outEl.scrollHeight;
+            }
+          }
+        } else {
+          const text = resp?.message?.content || String(resp);
+          outEl.textContent = text;
+        }
+      } catch (err) {
+        outEl.textContent = '⚠️ ' + (err.message || 'Không kết nối được AI. Vui lòng thử lại.') + '\n\nBạn có thể nhắn Zalo 0777707390 để được hỗ trợ.';
+      } finally {
+        outEl.classList.remove('loading');
+      }
+    }
+
+    // Copy / Save
+    document.body.addEventListener('click', (e) => {
+      const c = e.target.closest('[data-copy]');
+      if (c) {
+        const t = document.getElementById(c.dataset.copy).textContent;
+        if (t.trim()) copyText(t, c);
+        return;
+      }
+      const s = e.target.closest('[data-save]');
+      if (s) {
+        const t = document.getElementById(s.dataset.save).textContent;
+        if (!t.trim()) return;
+        const saved = JSON.parse(localStorage.getItem('fcma_saved') || '[]');
+        saved.unshift({ text: t.slice(0, 4000), ts: Date.now() });
+        localStorage.setItem('fcma_saved', JSON.stringify(saved.slice(0, 20)));
+        toast('✓ Đã lưu vào LocalStorage');
+        return;
+      }
+    });
+
+    /* ---- Chat ---- */
+    const chatBody = document.getElementById('chatBody');
+    const chatHistory = [{ role: 'system', content: 'Bạn là trợ lý AI đa năng của FCMA, giao tiếp tiếng Việt tự nhiên, trả lời ngắn gọn và hữu ích.' }];
+    document.getElementById('chatForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const inp = document.getElementById('chatInput');
+      const q = inp.value.trim();
+      if (!q) return;
+      inp.value = '';
+      const um = document.createElement('div'); um.className='chat-msg user'; um.textContent = q; chatBody.appendChild(um);
+      const bm = document.createElement('div'); bm.className='chat-msg bot'; bm.textContent = '...'; chatBody.appendChild(bm);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      chatHistory.push({ role: 'user', content: q });
+      try {
+        const resp = await puter.ai.chat(chatHistory, { model: 'gpt-4o-mini', stream: true });
+        bm.textContent = '';
+        let full = '';
+        if (resp && resp[Symbol.asyncIterator]) {
+          for await (const part of resp) {
+            if (part?.text) { full += part.text; bm.textContent = full; chatBody.scrollTop = chatBody.scrollHeight; }
+          }
+        } else {
+          full = resp?.message?.content || String(resp);
+          bm.textContent = full;
+        }
+        chatHistory.push({ role: 'assistant', content: full });
+      } catch (err) { bm.textContent = '⚠️ ' + (err.message || 'Không kết nối được.'); }
+    });
+
+    /* ---- Content ---- */
+    document.getElementById('c_run').addEventListener('click', () => {
+      const topic = document.getElementById('c_topic').value.trim();
+      if (!topic) return toast('Vui lòng nhập chủ đề');
+      const type = document.getElementById('c_type').value;
+      const tone = document.getElementById('c_tone').value;
+      const kw = document.getElementById('c_kw').value;
+      const prompt = `Viết ${type} bằng tiếng Việt về chủ đề: "${topic}". Giọng điệu: ${tone}.${kw ? ' Từ khoá SEO cần chèn tự nhiên: ' + kw + '.' : ''} Yêu cầu: có tiêu đề hấp dẫn, cấu trúc rõ ràng với subheading, đoạn văn dễ đọc, kết bài có CTA phù hợp.`;
+      runAI(prompt, document.getElementById('c_out'), 'Bạn là content writer chuyên nghiệp, viết tiếng Việt tự nhiên, không dùng emoji thừa.');
+    });
+
+    /* ---- Email ---- */
+    document.getElementById('e_run').addEventListener('click', () => {
+      const type = document.getElementById('e_type').value;
+      const to = document.getElementById('e_to').value.trim();
+      const goal = document.getElementById('e_goal').value.trim();
+      if (!goal) return toast('Vui lòng nhập mục tiêu email');
+      const prompt = `Viết một email loại: ${type}. Gửi tới: ${to || 'khách hàng tiềm năng'}. Mục tiêu: ${goal}. Yêu cầu: subject line hấp dẫn, mở đầu cá nhân hoá, body 120-180 từ, CTA rõ ràng cuối email. Trả lời tiếng Việt.`;
+      runAI(prompt, document.getElementById('e_out'), 'Bạn là email copywriter dày dạn kinh nghiệm B2B, viết email chuyên nghiệp và có tỉ lệ mở cao.');
+    });
+
+    /* ---- Ad ---- */
+    document.getElementById('a_run').addEventListener('click', () => {
+      const prod = document.getElementById('a_prod').value.trim();
+      if (!prod) return toast('Vui lòng nhập sản phẩm');
+      const aud = document.getElementById('a_aud').value;
+      const ch = document.getElementById('a_ch').value;
+      const goal = document.getElementById('a_goal').value;
+      const prompt = `Viết 3 phương án quảng cáo A/B cho ${ch}. Sản phẩm: ${prod}. Đối tượng: ${aud || 'người tiêu dùng Việt'}. Mục tiêu: ${goal}. Mỗi phương án gồm: (1) Headline (≤40 từ), (2) Primary text (≤120 từ), (3) CTA button. Đánh số rõ ràng A / B / C. Ngôn ngữ Việt tự nhiên.`;
+      runAI(prompt, document.getElementById('a_out'), 'Bạn là performance marketer chạy quảng cáo hiệu quả tại Việt Nam.');
+    });
+
+    /* ---- Prompt ---- */
+    document.getElementById('p_run').addEventListener('click', () => {
+      const idea = document.getElementById('p_idea').value.trim();
+      if (!idea) return toast('Vui lòng nhập ý tưởng');
+      const model = document.getElementById('p_model').value;
+      const prompt = `Tôi có ý tưởng thô: "${idea}". Hãy chuyển thành 1 prompt chuyên nghiệp dành cho ${model}. Yêu cầu prompt gồm: Role (đóng vai), Context (bối cảnh), Task (nhiệm vụ), Constraints (ràng buộc), Output format (định dạng đầu ra). Trình bày prompt rõ ràng để tôi copy-paste dùng ngay.`;
+      runAI(prompt, document.getElementById('p_out'), 'Bạn là chuyên gia prompt engineering biết viết prompt hiệu quả cho mọi model AI.');
+    });
+
+    /* ---- Business ---- */
+    document.getElementById('b_run').addEventListener('click', () => {
+      const idea = document.getElementById('b_idea').value.trim();
+      if (!idea) return toast('Vui lòng mô tả ý tưởng');
+      const cap = document.getElementById('b_cap').value;
+      const prompt = `Ý tưởng kinh doanh: ${idea}. Vốn dự kiến: ${cap || 'chưa xác định'}. Hãy lập kế hoạch kinh doanh gồm 5 phần: (1) Business Model Canvas 9 ô, (2) Phân tích thị trường & đối thủ Việt Nam, (3) Chiến lược go-to-market 3 tháng đầu, (4) Dự toán chi phí & doanh thu 6 tháng, (5) Rủi ro & giải pháp. Trình bày ngắn gọn, có số liệu ước lượng cụ thể.`;
+      runAI(prompt, document.getElementById('b_out'), 'Bạn là business consultant có kinh nghiệm giúp startup Việt Nam.');
+    });
+
+    /* ---- CV ---- */
+    document.getElementById('cv_run').addEventListener('click', () => {
+      const pos = document.getElementById('cv_pos').value.trim();
+      if (!pos) return toast('Vui lòng nhập vị trí ứng tuyển');
+      const name = document.getElementById('cv_name').value || '[Họ tên]';
+      const yr = document.getElementById('cv_yr').value || 'chưa nêu';
+      const skills = document.getElementById('cv_skills').value || 'chưa nêu';
+      const prompt = `Viết CV chuẩn ATS bằng Markdown cho ứng viên ${name}, ứng tuyển vị trí ${pos}, có ${yr} kinh nghiệm. Kỹ năng chính: ${skills}. Cấu trúc CV gồm: Tóm tắt (3 dòng), Kinh nghiệm (bullet có số liệu impact), Kỹ năng, Học vấn, Chứng chỉ. Tối ưu keyword theo mô tả công việc phổ biến của vị trí này.`;
+      runAI(prompt, document.getElementById('cv_out'), 'Bạn là chuyên gia tuyển dụng viết CV tối ưu ATS.');
+    });
+
+    document.addEventListener('DOMContentLoaded', () => FCMA_BOOT('lab'));
+  </script>
+</body>
+</html>

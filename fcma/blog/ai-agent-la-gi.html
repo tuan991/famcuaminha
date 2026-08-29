@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI Agent là gì? Khác chatbot ở đâu? Framework triển khai cho SME | FCMA</title>
+  <meta name="description" content="Hiểu bản chất AI Agent, phân biệt với chatbot và RAG bot. Khi nào cần Agent, framework triển khai thực tế cho doanh nghiệp vừa và nhỏ tại Việt Nam."/>
+  <link rel="canonical" href="https://famcuaminha.indevs.in/blog/ai-agent-la-gi.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="AI Agent là gì? Khác chatbot ở đâu?"/>
+  <meta property="og:description" content="Framework triển khai AI Agent cho SME Việt Nam."/>
+  <link rel="icon" type="image/svg+xml" href="../logo-fcma.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css"/>
+  <link rel="stylesheet" href="../assets/blog.css"/>
+  <script src="https://js.puter.com/v2/" defer></script>
+  <script src="../assets/app.js?v2" defer></script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"AI Agent là gì? Khác chatbot ở đâu?","author":{"@type":"Organization","name":"FCMA"},"publisher":{"@type":"Organization","name":"FCMA","logo":{"@type":"ImageObject","url":"https://famcuaminha.indevs.in/logo-fcma.png"}},"datePublished":"2026-08-01","description":"Framework triển khai AI Agent cho SME Việt Nam"}
+  </script>
+</head>
+<body>
+
+  <section class="article-hero">
+    <div class="container-sm">
+      <span class="eyebrow">AI Agent · 8 phút đọc</span>
+      <h1 style="margin-top: 20px;">AI Agent là gì? Khác chatbot ở đâu? Framework triển khai cho SME</h1>
+      <div class="article-meta mt-3">
+        <span>Đăng ngày 01/08/2026</span> · <span>FCMA Editorial</span> · <span>Cấp độ: Trung bình</span>
+      </div>
+    </div>
+  </section>
+
+  <article class="article-body container-sm">
+
+    <p><strong>Tóm tắt ngắn:</strong> AI Agent là hệ thống AI có thể tự lập kế hoạch, gọi công cụ (tool) và ra quyết định qua nhiều bước — khác với chatbot chỉ trả lời câu hỏi. Bài viết này giúp bạn phân biệt 3 loại (Bot, RAG bot, Agent), xác định khi nào doanh nghiệp thực sự cần Agent, và đưa ra framework 5 bước triển khai cho SME.</p>
+
+    <div class="toc">
+      <h4>Mục lục</h4>
+      <ol>
+        <li><a href="#s1">3 loại "AI trả lời" phổ biến hiện nay</a></li>
+        <li><a href="#s2">AI Agent hoạt động thế nào?</a></li>
+        <li><a href="#s3">Khi nào SME cần Agent — khi nào chỉ cần bot?</a></li>
+        <li><a href="#s4">Framework triển khai 5 bước</a></li>
+        <li><a href="#s5">Chi phí và timeline thực tế</a></li>
+      </ol>
+    </div>
+
+    <h2 id="s1">1. Ba loại "AI trả lời" phổ biến hiện nay</h2>
+    <p>Rất nhiều doanh nghiệp gọi mọi thứ là "chatbot AI" — nhưng thực tế có 3 loại khác biệt về mặt kỹ thuật và chi phí:</p>
+
+    <table>
+      <thead>
+        <tr><th>Loại</th><th>Đặc điểm</th><th>Ví dụ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Chatbot rule-based</strong></td><td>Trả lời theo kịch bản có sẵn (if-else). Không hiểu ngữ cảnh mở.</td><td>Chatbot menu Fanpage cũ</td></tr>
+        <tr><td><strong>RAG Bot (LLM + knowledge)</strong></td><td>Dùng LLM đọc tài liệu công ty rồi trả lời. Không "làm" gì, chỉ trả lời.</td><td>Bot tra cứu sản phẩm</td></tr>
+        <tr><td><strong>AI Agent</strong></td><td>Tự lập kế hoạch, gọi API/tool, ra quyết định nhiều bước, có thể tự sửa lỗi.</td><td>Agent đặt lịch, hoàn đơn, gửi voucher</td></tr>
+      </tbody>
+    </table>
+
+    <p>Sự khác biệt cốt lõi: <strong>Chatbot nói, Agent làm.</strong> Agent có khả năng chạm vào hệ thống của bạn — CRM, kho hàng, Notion, email — để hoàn thành công việc thay bạn.</p>
+
+    <h2 id="s2">2. AI Agent hoạt động thế nào?</h2>
+    <p>Một AI Agent điển hình gồm 4 thành phần:</p>
+    <ul>
+      <li><strong>LLM "não" (Brain)</strong>: GPT-4o, Claude, hoặc mô hình mở như Llama. Chịu trách nhiệm hiểu yêu cầu và lập kế hoạch.</li>
+      <li><strong>Tools (Công cụ)</strong>: Các hàm mà Agent có thể gọi — <code>search_orders</code>, <code>check_inventory</code>, <code>send_email</code>, <code>create_notion_task</code>...</li>
+      <li><strong>Memory (Bộ nhớ)</strong>: Lưu ngữ cảnh cuộc trò chuyện, lịch sử với khách, dữ liệu tra cứu.</li>
+      <li><strong>Orchestrator (Điều phối)</strong>: LangChain / LangGraph / Autogen — điều phối vòng lặp "suy nghĩ → gọi tool → quan sát kết quả → suy nghĩ tiếp".</li>
+    </ul>
+
+    <p>Ví dụ khi khách hỏi <em>"Đơn tôi đặt hôm qua sao chưa giao?"</em>:</p>
+    <blockquote>
+    <strong>Agent:</strong> <em>Nghĩ:</em> Cần tra đơn của khách này.<br/>
+    → Gọi <code>search_customer(phone)</code> → tìm được ID<br/>
+    → Gọi <code>get_orders(customer_id)</code> → 1 đơn đang shipping<br/>
+    → Gọi <code>track_shipment(order_id)</code> → đang ở kho HCM<br/>
+    → <em>Trả lời:</em> "Đơn #A2891 của anh đang ở kho HCM, dự kiến giao sáng mai trước 12h. Em vừa nhắc bên vận chuyển ạ."
+    </blockquote>
+
+    <h2 id="s3">3. Khi nào SME cần Agent — khi nào chỉ cần bot?</h2>
+    <p><strong>Bạn CHỈ cần chatbot đơn giản nếu:</strong></p>
+    <ul>
+      <li>90% câu hỏi khách hàng lặp lại và có câu trả lời cố định</li>
+      <li>Không cần chạm vào hệ thống nội bộ</li>
+      <li>Ngân sách &lt; 10 triệu / tháng</li>
+    </ul>
+    <p><strong>Bạn CẦN AI Agent nếu:</strong></p>
+    <ul>
+      <li>Câu hỏi khách hàng đòi hỏi tra cứu đơn hàng, kho, chính sách bảo hành cụ thể</li>
+      <li>Bạn muốn AI <em>thực sự làm</em>: đặt lịch, hoàn đơn, tạo voucher, gửi email</li>
+      <li>Có quy trình đa bước liên quan nhiều hệ thống</li>
+      <li>Muốn giảm 40-70% thời gian nhân viên xử lý thủ công</li>
+    </ul>
+
+    <h2 id="s4">4. Framework 5 bước triển khai cho SME</h2>
+
+    <h3>Bước 1 — Chọn use case có ROI rõ ràng nhất</h3>
+    <p>Đừng bắt đầu với "Agent trả lời mọi câu hỏi". Hãy chọn 1 quy trình cụ thể: <em>tra cứu đơn hàng, đặt lịch tư vấn, hoặc xử lý đổi trả</em>. Ước tính giờ nhân viên đang tốn — đây là baseline.</p>
+
+    <h3>Bước 2 — Kê khai tools cần thiết</h3>
+    <p>Liệt kê các hành động Agent phải làm được. Với đặt lịch, tối thiểu: <code>get_available_slots</code>, <code>create_appointment</code>, <code>send_confirmation</code>. Có sẵn API? Kết nối. Chưa có? Dùng Google Sheets + n8n webhook làm trung gian.</p>
+
+    <h3>Bước 3 — Viết prompt hệ thống + guardrails</h3>
+    <p>Prompt hệ thống quy định: vai trò, giọng điệu, khi nào escalate sang người thật, không được hứa gì. Guardrails ngăn Agent làm điều nguy hiểm (hoàn tiền trên 500k phải có người duyệt).</p>
+
+    <h3>Bước 4 — Test với 50-100 kịch bản thực</h3>
+    <p>Thu thập 50 câu hỏi/tình huống thực từ log Zalo/Facebook 30 ngày gần nhất. Chạy thử Agent. Ghi lại các case fail. Điều chỉnh prompt + tools.</p>
+
+    <h3>Bước 5 — Go-live với chế độ giám sát</h3>
+    <p>Bắt đầu bằng "human-in-the-loop": Agent đề xuất phản hồi, nhân viên duyệt trước khi gửi. Sau 1-2 tuần khi đạt &gt;90% chính xác, cho phép auto-reply và chỉ escalate câu khó.</p>
+
+    <h2 id="s5">5. Chi phí và timeline thực tế</h2>
+
+    <table>
+      <thead>
+        <tr><th>Hạng mục</th><th>SME (1-2 use case)</th><th>Doanh nghiệp lớn</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Thời gian triển khai</td><td>2-4 tuần</td><td>2-4 tháng</td></tr>
+        <tr><td>Chi phí setup</td><td>25-60 triệu</td><td>150-500 triệu</td></tr>
+        <tr><td>Vận hành / tháng</td><td>3-8 triệu (LLM + hosting)</td><td>15-50 triệu</td></tr>
+        <tr><td>ROI kỳ vọng (6 tháng)</td><td>3-6× chi phí setup</td><td>2-4×</td></tr>
+      </tbody>
+    </table>
+
+    <blockquote>
+    Lời khuyên FCMA: SME nên bắt đầu với 1 use case duy nhất, chứng minh ROI trong 90 ngày, sau đó mới nhân rộng. Đừng chạy đua với các case "AI Agent enterprise" — chúng có budget khác.
+    </blockquote>
+
+    <div class="glass mt-6" style="padding: 32px; border-radius: 20px; margin-top: 48px;">
+      <h3>Muốn triển khai AI Agent cho doanh nghiệp?</h3>
+      <p class="text-muted mt-2">FCMA đóng gói AI Agent theo ngành: F&amp;B, thương mại điện tử, giáo dục, dịch vụ. Đặt lịch audit miễn phí 20 phút để nhận đề xuất use case phù hợp.</p>
+      <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn btn-primary" href="../contact.html?service=agent">Đặt lịch audit</a>
+        <a class="btn btn-ghost" href="../services.html#agent">Xem dịch vụ AI Agent</a>
+      </div>
+    </div>
+
+  </article>
+
+  <section class="section">
+    <div class="container">
+      <h3 style="text-align:center;margin-bottom:32px">Đọc thêm</h3>
+      <div class="grid grid-2" style="max-width:880px;margin:0 auto">
+        <a href="workflow-automation-2026.html" class="card">
+          <span class="badge badge-violet">Automation</span>
+          <h3 style="margin-top:12px">Workflow Automation 2026: chọn stack nào?</h3>
+        </a>
+        <a href="prompt-engineering-cho-doanh-nghiep.html" class="card">
+          <span class="badge badge-green">Prompt</span>
+          <h3 style="margin-top:12px">Prompt Engineering: 5 quy tắc bắt buộc</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <script>document.addEventListener('DOMContentLoaded', () => FCMA_BOOT('blog', '../'));</script>
+</body>
+</html>
