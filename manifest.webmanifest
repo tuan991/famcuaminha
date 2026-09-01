@@ -1,12 +1,12 @@
 {
-  "name": "FCMA — AI Automation & Digital Transformation",
+  "name": "FCMA",
   "short_name": "FCMA",
-  "start_url": "/",
+  "description": "Your browser. Your tools. Your workspace.",
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#05060a",
-  "theme_color": "#6ee7ff",
+  "theme_color": "#0b0d10",
+  "background_color": "#0a0b0d",
   "icons": [
-    { "src": "/logo-fcma.png", "sizes": "any", "type": "image/png" },
-    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%23ff6a2b%22/><path d=%22M6 6h12M6 12h9M6 18h6%22 stroke=%22%230b0d10%22 stroke-width=%222.5%22 stroke-linecap=%22round%22/></svg>", "sizes": "any", "type": "image/svg+xml" }
   ]
 }
