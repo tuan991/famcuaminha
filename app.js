@@ -1083,3 +1083,124 @@ FL.__boot = async function(){
 // Also boot on DOMContentLoaded as fallback (whichever fires first will register)
 if (document.readyState !== 'loading') setTimeout(() => FL.__boot && FL.__boot(), 0);
 else document.addEventListener('DOMContentLoaded', () => FL.__boot && FL.__boot());
+// Thêm vào app.js
+class SmartDropZone {
+  constructor() {
+    this.dropZone = document.getElementById('drop-zone');
+    this.fileInput = this.dropZone.querySelector('input[type="file"]');
+    this.preview = document.getElementById('file-preview');
+    this.suggestions = document.getElementById('tool-suggestions');
+    this.suggestedTools = document.getElementById('suggested-tools');
+    this.init();
+  }
+
+  init() {
+    // Drag and drop events
+    this.dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      this.dropZone.classList.add('dragover');
+    });
+    
+    this.dropZone.addEventListener('dragleave', () => {
+      this.dropZone.classList.remove('dragover');
+    });
+    
+    this.dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      this.dropZone.classList.remove('dragover');
+      const files = e.dataTransfer.files;
+      this.handleFiles(files);
+    });
+
+    // Click to browse
+    this.dropZone.addEventListener('click', () => {
+      this.fileInput.click();
+    });
+
+    this.fileInput.addEventListener('change', (e) => {
+      this.handleFiles(e.target.files);
+    });
+  }
+
+  handleFiles(files) {
+    if (files.length === 0) return;
+    const file = files[0];
+    this.showPreview(file);
+    this.suggestTools(file);
+  }
+
+  showPreview(file) {
+    const size = (file.size / 1024 / 1024).toFixed(2);
+    const icon = this.getFileIcon(file.type);
+    this.preview.innerHTML = `
+      <div class="file-info">
+        <i class="fas ${icon}"></i>
+        <span class="file-name">${file.name}</span>
+        <span class="file-size">${size} MB</span>
+        <button class="btn-remove" onclick="this.closest('.file-preview').classList.add('hidden')">×</button>
+      </div>
+    `;
+    this.preview.classList.remove('hidden');
+  }
+
+  getFileIcon(mimeType) {
+    const map = {
+      'application/pdf': 'fa-file-pdf',
+      'image/': 'fa-file-image',
+      'text/csv': 'fa-file-csv',
+      'application/json': 'fa-file-code',
+      'application/vnd.ms-excel': 'fa-file-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'fa-file-excel'
+    };
+    for (const [key, icon] of Object.entries(map)) {
+      if (mimeType.startsWith(key)) return icon;
+    }
+    return 'fa-file';
+  }
+
+  suggestTools(file) {
+    const tools = this.getToolsForFile(file);
+    if (tools.length === 0) {
+      this.suggestions.classList.add('hidden');
+      return;
+    }
+    this.suggestedTools.innerHTML = tools.map(t => `
+      <a href="${t.url}" class="tool-chip" data-tool="${t.id}">
+        <i class="fas ${t.icon}"></i> ${t.name}
+      </a>
+    `).join('');
+    this.suggestions.classList.remove('hidden');
+  }
+
+  getToolsForFile(file) {
+    const map = {
+      'application/pdf': [
+        { id: 'pdf-merge', name: 'Gộp PDF', icon: 'fa-object-group', url: '/tools/pdf-merge/' },
+        { id: 'pdf-split', name: 'Tách PDF', icon: 'fa-cut', url: '/tools/pdf-split/' },
+        { id: 'pdf-compress', name: 'Nén PDF', icon: 'fa-compress-alt', url: '/tools/pdf-compress/' }
+      ],
+      'image/': [
+        { id: 'image-compress', name: 'Nén ảnh', icon: 'fa-compress', url: '/tools/image-compress/' },
+        { id: 'image-convert', name: 'Đổi định dạng', icon: 'fa-exchange-alt', url: '/tools/image-convert/' },
+        { id: 'image-resize', name: 'Đổi kích thước', icon: 'fa-expand', url: '/tools/image-resize/' }
+      ],
+      'text/csv': [
+        { id: 'csv-to-json', name: 'CSV → JSON', icon: 'fa-code', url: '/tools/csv-to-json/' },
+        { id: 'csv-editor', name: 'Sửa CSV', icon: 'fa-edit', url: '/tools/csv-editor/' }
+      ],
+      'application/json': [
+        { id: 'json-formatter', name: 'Format JSON', icon: 'fa-brackets-curly', url: '/tools/json-formatter/' },
+        { id: 'json-to-csv', name: 'JSON → CSV', icon: 'fa-table', url: '/tools/json-to-csv/' }
+      ]
+    };
+    for (const [key, tools] of Object.entries(map)) {
+      if (file.type.startsWith(key)) return tools;
+    }
+    return [];
+  }
+}
+
+// Khởi tạo
+document.addEventListener('DOMContentLoaded', () => {
+  window.dropZone = new SmartDropZone();
+});
