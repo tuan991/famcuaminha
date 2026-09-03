@@ -331,6 +331,19 @@ table.tbl{width:100%;border-collapse:collapse;font-size:13px}
   </button>
   <button class="icon-btn mobile-toggle" onclick="FL.palette.open()" title="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
 </header>
+   
+<div id="drop-zone" class="drop-zone">
+  <div class="drop-zone-content">
+    <i class="fas fa-cloud-upload-alt"></i>
+    <p>Thả file vào đây hoặc <span class="browse-link">duyệt</span></p>
+    <small>Hỗ trợ: PDF, Ảnh, Excel, Word, CSV, JSON, ZIP</small>
+    <div id="file-preview" class="file-preview hidden"></div>
+    <div id="tool-suggestions" class="tool-suggestions hidden">
+      <p>🔍 Công cụ gợi ý cho file này:</p>
+      <div id="suggested-tools" class="suggested-tools"></div>
+    </div>
+  </div>
+</div>
 
 <main id="view"></main>
 
