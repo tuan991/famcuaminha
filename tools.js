@@ -503,7 +503,14 @@ FL.registerTool({
   id:'markdown-preview', name:'Markdown Preview', desc:'Live markdown → HTML preview (subset: headings, bold/italic, lists, code, links).', icon:'M↓', category:'text', privacy:'local', tags:['markdown','md','preview'],
   mount(m){
     m.innerHTML = `<div class="tool-body tool-split">
-      <div class="field"><label>Markdown</label><textarea id="mIn" rows="20"># Hello\n\n**Bold** and *italic*.\n\n- item 1\n- item 2\n\n\`code\` and [link](https://example.com)</textarea></div>
+      <div class="field"><label>Markdown</label><textarea id="mIn" rows="20"># Hello
+
+**Bold** and *italic*.
+
+- item 1
+- item 2
+
+\code\ and [link](https://example.com)</textarea></div>
       <div class="field"><label>Preview</label><div id="mOut" class="card" style="min-height:400px;background:#fff;color:#111;padding:16px"></div></div>
     </div>`;
     const render = (md) => {
@@ -605,7 +612,9 @@ FL.registerTool({
   id:'sql-playground', name:'SQL Playground (SQLite)', desc:'Run SQL against an in-browser SQLite database — no upload.', icon:'🗄', category:'data', privacy:'local', tags:['sql','sqlite','query'],
   mount(m){
     m.innerHTML = `<div class="note ok">Loading sql.js (WebAssembly) once…</div>
-    <div class="field" style="margin-top:12px"><label>SQL</label><textarea id="sqlIn" rows="8">CREATE TABLE users (id INTEGER, name TEXT, age INTEGER);\nINSERT INTO users VALUES (1,'Alice',30),(2,'Bob',25);\nSELECT * FROM users;</textarea></div>
+    <div class="field" style="margin-top:12px"><label>SQL</label><textarea id="sqlIn" rows="8">CREATE TABLE users (id INTEGER, name TEXT, age INTEGER);
+INSERT INTO users VALUES (1,'Alice',30),(2,'Bob',25);
+SELECT * FROM users;</textarea></div>
     <div style="margin-top:8px;display:flex;gap:8px"><button class="btn btn-primary btn-sm" id="sqlRun" disabled>Run</button></div>
     <div id="sqlOut" style="margin-top:12px"></div>`;
     let db;
