@@ -933,7 +933,8 @@ FL.registerTool({
       <div class="field"><label>Method</label><select id="cM"><option>GET</option><option>POST</option><option>PUT</option><option>PATCH</option><option>DELETE</option></select></div>
       <div class="field"><label>URL</label><input id="cU" value="https://api.example.com/v1/users"/></div>
     </div>
-    <div class="field" style="margin-top:10px"><label>Headers (one per line: Key: value)</label><textarea id="cH" rows="3">Content-Type: application/json\nAuthorization: Bearer YOUR_TOKEN</textarea></div>
+    <div class="field" style="margin-top:10px"><label>Headers (one per line: Key: value)</label><textarea id="cH" rows="3">Content-Type: application/json
+Authorization: ******</textarea></div>
     <div class="field" style="margin-top:10px"><label>Body (JSON)</label><textarea id="cB" rows="4">{"name":"Alice"}</textarea></div>
     <div class="field" style="margin-top:10px"><label>cURL</label><textarea id="cOut" rows="8" readonly class="mono"></textarea></div>`;
     const build = () => {
