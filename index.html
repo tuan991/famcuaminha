@@ -3,6 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+        // Xóa sạch toàn bộ Service Worker và Cache Storage cũ của trang FCMA trước đây
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                for (let r of registrations) { r.unregister(); }
+            });
+        }
+        if ('caches' in window) {
+            caches.keys().then(keys => {
+                for (let k of keys) { caches.delete(k); }
+            });
+        }
+    </script>
     <title>Ngọc Rồng FCMA Online — Trang Chủ Chính Thức</title>
     <link rel="icon" href="images/favicon-32x32.png" type="image/png">
     <meta name="description" content="Máy chủ Ngọc Rồng FCMA Online miễn phí, cày cuốc công bằng, Boss Thần Thú độc quyền, hệ thống đệ tử, đồ họa mượt mà 60 FPS!">
