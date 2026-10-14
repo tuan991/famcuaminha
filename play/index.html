@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FCMA Online">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" href="/favicon-32x32.png" type="image/png">
+    <title>Ngọc Rồng FCMA - Chơi Trực Tiếp Trên Web</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg: #000;
+            --panel: rgba(10, 10, 10, 0.88);
+            --border: rgba(255, 255, 255, 0.12);
+            --text: #f6f6f6;
+            --text-soft: rgba(246, 246, 246, 0.72);
+            --accent: #ff9b38;
+            --accent-2: #55f0da;
+            --danger: #ff7b72;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: var(--bg);
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        body {
+            color: var(--text);
+        }
+
+        #app {
+            position: fixed;
+            inset: 0;
+            background: #000;
+        }
+
+        #unity-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            outline: none;
+        }
+
+
+        /* Full-window nhưng không dùng Fullscreen API.
+           Canvas chỉ lấp đầy vùng trình duyệt; Unity tự quản lý backing resolution. */
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #app {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #unity-canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: none;
+            background: #000;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #unity-fullscreen-button {
+            display: none !important;
+        }
+
+        #start-screen,
+        #loading,
+        #rotate-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #start-screen {
+            z-index: 3;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 50% 35%, rgba(255, 155, 56, 0.12), transparent 38%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.90));
+        }
+
+        .start-card {
+            width: min(420px, calc(100% - 32px));
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+        }
+
+        .start-title {
+            margin: 0 0 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .start-description {
+            margin: 0 0 18px;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        #play-game-button {
+            width: 100%;
+            min-height: 56px;
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: #1b1208;
+            background: linear-gradient(180deg, #ffd45a, var(--accent));
+            box-shadow: 0 8px 28px rgba(255, 155, 56, 0.28);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #play-game-button:hover {
+            filter: brightness(1.06);
+        }
+
+        #play-game-button:active {
+            transform: translateY(1px);
+        }
+
+        #play-game-button:disabled {
+            cursor: default;
+            opacity: 0.65;
+            transform: none;
+        }
+
+        #loading {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.92));
+            z-index: 3;
+        }
+
+        .loading-card {
+            width: min(420px, calc(100% - 32px));
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--panel);
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-title {
+            margin: 0 0 12px;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            transition: width 0.18s ease;
+        }
+
+        #loading-text {
+            margin: 12px 0 0;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
+
+        #rotate-overlay {
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.94);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 4;
+            transition: opacity 0.18s ease;
+        }
+
+        #rotate-overlay.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .phone-frame {
+            position: relative;
+            width: 72px;
+            height: 120px;
+            border: 3px solid var(--accent-2);
+            border-radius: 18px;
+            box-shadow: 0 0 20px rgba(85, 240, 218, 0.28);
+            animation: rotate-phone 1.5s ease-in-out infinite;
+        }
+
+        .phone-frame::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 22px;
+            height: 4px;
+            transform: translateX(-50%);
+            border-radius: 999px;
+            background: var(--accent-2);
+        }
+
+        #error-box {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 16px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255, 123, 114, 0.22);
+            border-radius: 14px;
+            background: rgba(71, 20, 16, 0.94);
+            color: #ffd6d2;
+            z-index: 5;
+            line-height: 1.5;
+        }
+
+        #error-box.is-hidden,
+        #start-screen.is-hidden,
+        #loading.is-hidden {
+            display: none;
+        }
+
+        #webgl-input-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            overflow: visible;
+        }
+
+        #webgl-input-overlay,
+        .webgl-input-overlay,
+        #webgl-input-layer #webgl-input-overlay,
+        #webgl-input-layer .webgl-input-overlay {
+            position: fixed !important;
+            z-index: 10000 !important;
+            overflow: visible !important;
+            pointer-events: none;
+        }
+
+        #webgl-input-layer .webgl-input,
+        #webgl-input-layer input.webgl-input,
+        #webgl-input-layer textarea.webgl-input,
+        #webgl-input-overlay input,
+        #webgl-input-overlay textarea,
+        .webgl-input-overlay input,
+        .webgl-input-overlay textarea,
+        input.webgl-input,
+        textarea.webgl-input {
+            z-index: 10001 !important;
+            pointer-events: auto;
+        }
+
+        @keyframes rotate-phone {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <canvas id="unity-canvas" tabindex="1" aria-label="Unity WebGL Canvas"></canvas>
+
+        <div id="start-screen">
+            <div class="start-card">
+                <p class="start-title" style="color: #f97316; font-weight: 800; font-size: 26px; text-shadow: 0 0 15px rgba(249, 115, 22, 0.6);">NGỌC RỒNG FCMA</p>
+                <p class="start-description">Chơi trực tiếp trên Safari iPhone / iPad & Trình duyệt Web không cần cài đặt!</p>
+                <button id="play-game-button" type="button" style="background: linear-gradient(135deg, #f97316, #ea580c); font-weight: bold; font-size: 18px; padding: 14px 28px; border-radius: 12px; cursor: pointer; box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);">VÀO CHƠI NGAY</button>
+                <div style="margin-top: 15px;">
+                    <a href="/" style="color: #38bdf8; font-size: 13px; text-decoration: none;">← Về Trang Chủ FCMA</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="is-hidden">
+            <div class="loading-card">
+                <p class="loading-title">NGỌC RỒNG FCMA</p>
+                <div class="progress-track">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <p id="loading-text">Đang tải tài nguyên game...</p>
+            </div>
+        </div>
+
+        <div id="rotate-overlay">
+            <div class="phone-frame"></div>
+            <p>Xoay ngang thiết bị để chơi game.</p>
+        </div>
+
+        <div id="error-box" class="is-hidden" role="alert"></div>
+    </div>
+
+    <script>
+        window.FCMA_WS_URL = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+        const unityCanvas = document.getElementById("unity-canvas");
+        const startScreen = document.getElementById("start-screen");
+        const playGameButton = document.getElementById("play-game-button");
+        const loading = document.getElementById("loading");
+        const progressBar = document.getElementById("progress-bar");
+        const loadingText = document.getElementById("loading-text");
+        const rotateOverlay = document.getElementById("rotate-overlay");
+        const errorBox = document.getElementById("error-box");
+
+        let webglInputLayer = null;
+        let webglInputObserver = null;
+        let unityInstance = null;
+        let gameStartRequested = false;
+
+        const BUILD_VERSION = "20260924_testflight_13";
+
+        const isIOS =
+            /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        const isMobile = isIOS || /Android|Mobi/i.test(navigator.userAgent);
+
+        // Retina-quality WebGL backing buffer.
+        // iOS Safari can use the real Retina scale up to 3x, matching TestFlight
+        // much more closely. Other WebGL platforms are capped at 2x for balance.
+        const IOS_DPR_CAP = 3.0;
+        const OTHER_DPR_CAP = 2.0;
+        const browserDpr = Math.max(1, window.devicePixelRatio || 1);
+        const renderDpr = isIOS
+            ? Math.min(browserDpr, IOS_DPR_CAP)
+            : Math.min(browserDpr, OTHER_DPR_CAP);
+
+        const unityConfig = {
+            dataUrl: "./Build/WebGL.data?v=" + BUILD_VERSION,
+            frameworkUrl: "./Build/WebGL.framework.js?v=" + BUILD_VERSION,
+            codeUrl: "./Build/WebGL.wasm?v=" + BUILD_VERSION,
+            companyName: "binhnro",
+            productName: "binhnro",
+            productVersion: "3.0.2",
+            autoSyncPersistentDataPath: true,
+            matchWebGLToCanvasSize: true,
+            devicePixelRatio: renderDpr
+        };
+
+        console.info(
+            "[WEBGL-QUALITY] iOS=" + isIOS +
+            " browserDPR=" + browserDpr +
+            " renderDPR=" + renderDpr
+        );
+
+        function setError(message) {
+            errorBox.textContent = message;
+            errorBox.classList.remove("is-hidden");
+            startScreen.classList.add("is-hidden");
+            loading.classList.add("is-hidden");
+        }
+
+        function focusUnityCanvas() {
+            try {
+                window.focus();
+                unityCanvas.focus({ preventScroll: true });
+            } catch (error) {
+                try {
+                    unityCanvas.focus();
+                } catch (ignoreError) {}
+            }
+        }
+
+        function toggleRotateOverlay() {
+            const isPortrait = window.innerHeight > window.innerWidth;
+            rotateOverlay.classList.toggle("is-visible", isMobile && isPortrait);
+        }
+
+        function ensureWebglInputLayer() {
+            if (webglInputLayer) {
+                return webglInputLayer;
+            }
+
+            webglInputLayer = document.createElement("div");
+            webglInputLayer.id = "webgl-input-layer";
+            document.body.appendChild(webglInputLayer);
+            return webglInputLayer;
+        }
+
+        function isWebglInputNode(node) {
+            if (!(node instanceof HTMLElement)) {
+                return false;
+            }
+
+            return node.matches(
+                "#webgl-input-overlay, .webgl-input-overlay, .webgl-input, input.webgl-input, textarea.webgl-input"
+            );
+        }
+
+        function moveWebglInputNode(node) {
+            const layer = ensureWebglInputLayer();
+
+            if (!isWebglInputNode(node) || layer.contains(node)) {
+                return;
+            }
+
+            layer.appendChild(node);
+        }
+
+        function normalizeWebglInputTree(rootNode) {
+            if (!(rootNode instanceof HTMLElement)) {
+                return;
+            }
+
+            if (isWebglInputNode(rootNode)) {
+                moveWebglInputNode(rootNode);
+            }
+
+            rootNode
+                .querySelectorAll(
+                    "#webgl-input-overlay, .webgl-input-overlay, .webgl-input, input.webgl-input, textarea.webgl-input"
+                )
+                .forEach(moveWebglInputNode);
+        }
+
+        function observeWebglInputOverlay() {
+            ensureWebglInputLayer();
+
+            if (webglInputObserver) {
+                webglInputObserver.disconnect();
+            }
+
+            webglInputObserver = new MutationObserver(function (mutationList) {
+                mutationList.forEach(function (mutation) {
+                    mutation.addedNodes.forEach(normalizeWebglInputTree);
+                });
+            });
+
+            webglInputObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+
+            normalizeWebglInputTree(document.body);
+        }
+
+        function applyViewportSize() {
+            document.documentElement.style.width = "100%";
+            document.documentElement.style.height = "100%";
+            document.documentElement.style.margin = "0";
+            document.documentElement.style.padding = "0";
+            document.documentElement.style.overflow = "hidden";
+
+            document.body.style.width = "100%";
+            document.body.style.height = "100%";
+            document.body.style.margin = "0";
+            document.body.style.padding = "0";
+            document.body.style.overflow = "hidden";
+
+            const app = document.getElementById("app");
+            if (app) {
+                app.style.position = "fixed";
+                app.style.inset = "0";
+                app.style.width = "100%";
+                app.style.height = "100%";
+                app.style.margin = "0";
+                app.style.padding = "0";
+                app.style.overflow = "hidden";
+            }
+
+            // Không ép pixel width/height từ visualViewport.
+            // Việc ép riêng width/height trước đây làm logical Screen size thay đổi
+            // và MotherCanvas có thể chọn zoomLevel sai trên desktop.
+            unityCanvas.style.width = "100%";
+            unityCanvas.style.height = "100%";
+            unityCanvas.style.margin = "0";
+            unityCanvas.style.padding = "0";
+            unityCanvas.style.display = "block";
+        }
+
+        function startGameFromUserGesture() {
+            if (gameStartRequested || unityInstance) {
+                return;
+            }
+
+            gameStartRequested = true;
+            playGameButton.disabled = true;
+
+            // Chỉ từ thời điểm người dùng bấm CHƠI GAME mới bắt đầu Unity/WebGL.
+            startScreen.classList.add("is-hidden");
+            loading.classList.remove("is-hidden");
+            loadingText.textContent = "Đang tải game...";
+            progressBar.style.width = "0%";
+
+            // WebGL input observer chỉ cần hoạt động khi Unity chuẩn bị chạy.
+            observeWebglInputOverlay();
+
+            // User gesture giúp browser cho phép focus/audio ổn định hơn.
+            focusUnityCanvas();
+
+            loadUnity();
+        }
+
+        function loadUnity() {
+            const loaderScript = document.createElement("script");
+            loaderScript.src = "./Build/WebGL.loader.js?v=" + BUILD_VERSION;
+
+            loaderScript.onload = function () {
+                if (typeof createUnityInstance !== "function") {
+                    setError("Khong tim thay createUnityInstance trong loader.");
+                    return;
+                }
+
+                createUnityInstance(unityCanvas, unityConfig, function (progress) {
+                    const safeProgress = Math.max(0, Math.min(1, progress || 0));
+                    progressBar.style.width = `${safeProgress * 100}%`;
+                    loadingText.textContent = `Dang tai game: ${Math.round(safeProgress * 100)}%`;
+                }).then(function (instance) {
+                    unityInstance = instance;
+                    loading.classList.add("is-hidden");
+                    focusUnityCanvas();
+                }).catch(function (error) {
+                    setError(`Khoi dong game that bai: ${error}`);
+                });
+            };
+
+            loaderScript.onerror = function () {
+                setError("Khong tai duoc file WebGL.loader.js.");
+            };
+
+            document.body.appendChild(loaderScript);
+        }
+
+        unityCanvas.addEventListener("pointerdown", function () {
+            focusUnityCanvas();
+        });
+
+        unityCanvas.addEventListener("dblclick", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (event.stopImmediatePropagation) {
+                event.stopImmediatePropagation();
+            }
+
+            return false;
+        }, true);
+
+        ["gesturestart", "gesturechange", "gestureend"].forEach(function (eventName) {
+            document.addEventListener(eventName, function (event) {
+                if (
+                    event.target === unityCanvas ||
+                    (unityCanvas.parentElement &&
+                     unityCanvas.parentElement.contains(event.target))
+                ) {
+                    event.preventDefault();
+                }
+            }, {
+                capture: true,
+                passive: false
+            });
+        });
+
+        playGameButton.addEventListener("click", startGameFromUserGesture, { once: true });
+
+        window.addEventListener("load", function () {
+            // Chỉ chuẩn hóa giao diện. KHÔNG khởi động Unity ở đây.
+            applyViewportSize();
+            toggleRotateOverlay();
+        });
+
+        window.addEventListener("resize", function () {
+            applyViewportSize();
+            toggleRotateOverlay();
+        });
+
+        window.addEventListener("orientationchange", function () {
+            applyViewportSize();
+            toggleRotateOverlay();
+
+            setTimeout(function () {
+                applyViewportSize();
+                toggleRotateOverlay();
+            }, 100);
+
+            setTimeout(function () {
+                applyViewportSize();
+                toggleRotateOverlay();
+            }, 300);
+        });
+
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener("resize", function () {
+                applyViewportSize();
+                toggleRotateOverlay();
+            });
+        }
+    </script>
+</body>
+</html>
