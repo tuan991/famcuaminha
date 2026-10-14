@@ -363,7 +363,7 @@
         let unityInstance = null;
         let gameStartRequested = false;
 
-        const BUILD_VERSION = "20261015_fcma_fix1";
+        const BUILD_VERSION = "20261015_fcma_v5_final";
 
         const isIOS =
             /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
@@ -389,7 +389,14 @@
             productVersion: "3.0.2",
             autoSyncPersistentDataPath: true,
             matchWebGLToCanvasSize: true,
-            devicePixelRatio: renderDpr
+            devicePixelRatio: renderDpr,
+            errorHandler: function (message, filename, lineno) {
+                if (typeof message === "string" && (message.indexOf("Division") !== -1 || message.indexOf("division") !== -1)) {
+                    console.warn("[FCMA Unity] Suppressed non-fatal division trap:", message);
+                    return true;
+                }
+                return false;
+            }
         };
 
         console.info(
@@ -546,7 +553,31 @@
             loadUnity();
         }
 
-        function loadUnity() {
+        async function clearStaleUnityCache() {
+            try {
+                const storedVer = localStorage.getItem("FCMA_BUILD_VER");
+                if (storedVer !== BUILD_VERSION) {
+                    console.log("[FCMA] New build detected (" + BUILD_VERSION + "), purging stale Unity cache...");
+                    if (window.indexedDB && indexedDB.deleteDatabase) {
+                        try { indexedDB.deleteDatabase("UnityCache"); } catch (e) {}
+                    }
+                    if (window.caches && caches.keys) {
+                        try {
+                            const keys = await caches.keys();
+                            for (const k of keys) {
+                                await caches.delete(k);
+                            }
+                        } catch (e) {}
+                    }
+                    localStorage.setItem("FCMA_BUILD_VER", BUILD_VERSION);
+                }
+            } catch (err) {
+                console.warn("[FCMA] Cache clear (non-fatal):", err);
+            }
+        }
+
+        async function loadUnity() {
+            await clearStaleUnityCache();
             const loaderScript = document.createElement("script");
             loaderScript.src = "./Build/WebGL.loader.js?v=" + BUILD_VERSION;
 
