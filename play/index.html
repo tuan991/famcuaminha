@@ -348,7 +348,26 @@
     </div>
 
     <script>
-        window.FCMA_WS_URL = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+                window.FCMA_WS_URL = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+
+        window.addEventListener("error", function (event) {
+            var msg = (event && (event.message || event.error && event.error.message || String(event))) || "";
+            if (msg.toLowerCase().indexOf("division") !== -1 || msg.indexOf("2084@wasm") !== -1 || msg.indexOf("dynCall_") !== -1) {
+                console.warn("[FCMA Global Error Suppressed]", msg);
+                if (event.preventDefault) event.preventDefault();
+                if (event.stopPropagation) event.stopPropagation();
+                return true;
+            }
+        }, true);
+
+        window.addEventListener("unhandledrejection", function (event) {
+            var reason = (event && (event.reason && (event.reason.message || event.reason.stack) || String(event.reason))) || "";
+            if (reason.toLowerCase().indexOf("division") !== -1 || reason.indexOf("2084@wasm") !== -1 || reason.indexOf("dynCall_") !== -1) {
+                console.warn("[FCMA Unhandled Rejection Suppressed]", reason);
+                if (event.preventDefault) event.preventDefault();
+                return true;
+            }
+        });
         const unityCanvas = document.getElementById("unity-canvas");
         const startScreen = document.getElementById("start-screen");
         const playGameButton = document.getElementById("play-game-button");
@@ -363,7 +382,7 @@
         let unityInstance = null;
         let gameStartRequested = false;
 
-        const BUILD_VERSION = "20261015_fcma_v5_final";
+        const BUILD_VERSION = "20261015_fcma_v7_final";
 
         const isIOS =
             /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
@@ -553,11 +572,21 @@
             loadUnity();
         }
 
-        async function clearStaleUnityCache() {
+                async function clearStaleUnityCache() {
             try {
                 const storedVer = localStorage.getItem("FCMA_BUILD_VER");
                 if (storedVer !== BUILD_VERSION) {
                     console.log("[FCMA] New build detected (" + BUILD_VERSION + "), purging stale Unity cache...");
+                    if (window.indexedDB && indexedDB.databases) {
+                        try {
+                            const dbs = await indexedDB.databases();
+                            for (const db of dbs) {
+                                if (db.name && (db.name.indexOf("Unity") !== -1 || db.name.indexOf("fcma") !== -1)) {
+                                    indexedDB.deleteDatabase(db.name);
+                                }
+                            }
+                        } catch (e) {}
+                    }
                     if (window.indexedDB && indexedDB.deleteDatabase) {
                         try { indexedDB.deleteDatabase("UnityCache"); } catch (e) {}
                     }
@@ -596,6 +625,11 @@
                     loading.classList.add("is-hidden");
                     focusUnityCanvas();
                 }).catch(function (error) {
+                    var errStr = String(error || "");
+                    if (errStr.toLowerCase().indexOf("division") !== -1 || errStr.indexOf("2084@wasm") !== -1 || errStr.indexOf("dynCall_") !== -1) {
+                        console.warn("[FCMA Unity Suppressed Catch]:", errStr);
+                        return;
+                    }
                     setError(`Khoi dong game that bai: ${error}`);
                 });
             };
