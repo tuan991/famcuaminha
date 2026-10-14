@@ -410,8 +410,9 @@
             matchWebGLToCanvasSize: true,
             devicePixelRatio: renderDpr,
             errorHandler: function (message, filename, lineno) {
-                if (typeof message === "string" && (message.indexOf("Division") !== -1 || message.indexOf("division") !== -1)) {
-                    console.warn("[FCMA Unity] Suppressed non-fatal division trap:", message);
+                var str = (message && (message.message || message.stack || String(message))) || "";
+                if (str.toLowerCase().indexOf("division") !== -1 || str.indexOf("2084@wasm") !== -1 || str.indexOf("dynCall_") !== -1) {
+                    console.warn("[FCMA Unity] Suppressed non-fatal division trap:", str);
                     return true;
                 }
                 return false;
