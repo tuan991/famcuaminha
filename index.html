@@ -30,6 +30,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- iOS Safari & PWA (Thêm vào Màn hình chính) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FCMA Online">
+    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+    <link rel="manifest" href="manifest.json">
+
     <style>
         :root {
             --primary: #f97316;
@@ -632,24 +641,30 @@
                         </a>
                     </div>
 
-                    <!-- iOS / TestFlight Download -->
-                    <div class="dl-card" style="border-color: rgba(249, 115, 22, 0.4); box-shadow: 0 0 25px rgba(249, 115, 22, 0.1);">
-                        <img src="images/ip.png" alt="iOS TestFlight Client">
+                    <!-- iOS / Safari & Home Screen -->
+                    <div class="dl-card" style="border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);">
+                        <img src="images/ip.png" alt="iOS Safari Client">
                         <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Bản iPhone / iPad (iOS)</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Tải file cài đặt .IPA trực tiếp hoặc tải qua link Google Drive cho iPhone / iPad.</p>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Chơi qua Safari, gắn vào Màn hình chính hoặc cài đặt trực tiếp qua OTA.</p>
                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-ios" style="width: 100%; justify-content: center;">
-                                <i class="fa-brands fa-apple"></i> Tải Trực Tiếp File .IPA (40MB)
+                            <!-- Cài trực tiếp OTA 1 chạm trên Safari -->
+                            <a href="itms-services://?action=download-manifest&url=https://famcuaminha.indevs.in/manifest.plist" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.4);">
+                                <i class="fa-brands fa-apple"></i> Cài Trực Tiếp Trên Safari (OTA 1-Chạm)
                             </a>
-                            <a href="https://drive.google.com/file/d/1EEOZFGiMGffsMCWB6_xKkPEB7booW6WQ/view" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 13px; padding: 10px 16px;">
-                                <i class="fa-brands fa-google-drive"></i> Link Dự Phòng Google Drive
+                            <!-- Nút Hướng Dẫn Gắn Vào Màn Hình Chính -->
+                            <button onclick="document.getElementById('iosSafariModal').style.display='flex'" class="btn btn-ios" style="width: 100%; justify-content: center; cursor: pointer; border-color: #38bdf8;">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Hướng Dẫn Gắn Vào Màn Hình Chính
+                            </button>
+                            <!-- Tải File Gốc IPA -->
+                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 13px; padding: 10px 16px;">
+                                <i class="fa-solid fa-file-arrow-down"></i> Tải File Gốc FCMA.ipa (40MB)
                             </a>
-                            <a href="https://testflight.apple.com/join/FWEJoZEB" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 12px; padding: 8px 12px; opacity: 0.75;">
-                                <i class="fa-solid fa-plane-departure"></i> Thử Apple TestFlight
+                            <a href="https://drive.google.com/file/d/1EEOZFGiMGffsMCWB6_xKkPEB7booW6WQ/view" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 12px; padding: 8px 12px; opacity: 0.75;">
+                                <i class="fa-brands fa-google-drive"></i> Link Dự Phòng Google Drive (Bản IPA)
                             </a>
                         </div>
-                        <div style="margin-top: 12px; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #fde68a; text-align: left; line-height: 1.5;">
-                            <i class="fa-solid fa-triangle-exclamation" style="color: #f59e0b;"></i> <strong>Lưu ý về TestFlight:</strong> Nếu Apple báo <em>"Không có sẵn"</em> (do đợt test 90 ngày của Apple đã hết hạn), bạn chỉ cần ấn nút <strong>"Tải Trực Tiếp File .IPA"</strong> ở trên để cài qua TrollStore / Scarlet / Sideloadly / AltStore là chơi được ngay!
+                        <div style="margin-top: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #bae6fd; text-align: left; line-height: 1.5;">
+                            <i class="fa-solid fa-lightbulb" style="color: #38bdf8;"></i> <strong>Mẹo cài IPA 100% thành công:</strong> Cắm iPhone vào máy tính qua cáp sạc -> Mở <strong>3uTools</strong> (đã có sẵn trên máy) -> Kéo file <code>FCMA.ipa</code> vào mục Apps để cài đặt tự động trong 30 giây!
                         </div>
                     </div>
                 </div>
@@ -746,5 +761,33 @@
         }
         draw();
     </script>
+    <!-- Modal Hướng Dẫn Thêm Vào Màn Hình Chính Safari iOS -->
+    <div id="iosSafariModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; justify-content: center; align-items: center; padding: 20px;">
+        <div style="background: #1e293b; border: 1px solid #38bdf8; border-radius: 20px; max-width: 480px; width: 100%; padding: 25px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); color: #fff; position: relative;">
+            <button onclick="document.getElementById('iosSafariModal').style.display='none'" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <i class="fa-brands fa-apple" style="font-size: 40px; color: #38bdf8; margin-bottom: 10px;"></i>
+                <h3 style="font-size: 20px; font-weight: 800;">GẮN FCMA VÀO MÀN HÌNH CHÍNH IPHONE</h3>
+                <p style="font-size: 13px; color: #94a3b8; margin-top: 5px;">Chơi qua Safari toàn màn hình không có thanh địa chỉ</p>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px; font-size: 14px; line-height: 1.5;">
+                <div style="display: flex; gap: 12px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 12px;">
+                    <span style="background: #f97316; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; flex-shrink: 0;">1</span>
+                    <div>Mở trang <strong>famcuaminha.indevs.in</strong> bằng trình duyệt <strong>Safari</strong> trên iPhone của bạn.</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 12px;">
+                    <span style="background: #f97316; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; flex-shrink: 0;">2</span>
+                    <div>Nhìn xuống thanh công cụ dưới đáy Safari, bấm biểu tượng <strong>Chia sẻ</strong> (hình ô vuông có mũi tên chỉ lên <i class="fa-solid fa-arrow-up-from-bracket" style="color: #38bdf8;"></i>).</div>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: flex-start; background: rgba(15, 23, 42, 0.6); padding: 12px; border-radius: 12px;">
+                    <span style="background: #f97316; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; flex-shrink: 0;">3</span>
+                    <div>Cuộn xuống chọn dòng <strong>"Thêm vào Màn hình chính" (Add to Home Screen)</strong> rồi nhấn <strong>Thêm</strong> ở góc trên bên phải.</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="document.getElementById('iosSafariModal').style.display='none'" class="btn btn-primary" style="width: 100%; justify-content: center;">Đã Hiểu</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "name": "Ngọc Rồng FCMA Online",
+  "short_name": "FCMA Online",
+  "description": "Máy chủ Ngọc Rồng FCMA Online",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#090a0f",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "images/favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "images/logo_sk_he.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
