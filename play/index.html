@@ -382,7 +382,7 @@
         let unityInstance = null;
         let gameStartRequested = false;
 
-        const BUILD_VERSION = "20261015_fcma_v7_final";
+        const BUILD_VERSION = "20261015_fcma_v8_final";
 
         const isIOS =
             /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
@@ -626,12 +626,8 @@
                     loading.classList.add("is-hidden");
                     focusUnityCanvas();
                 }).catch(function (error) {
-                    var errStr = String(error || "");
-                    if (errStr.toLowerCase().indexOf("division") !== -1 || errStr.indexOf("2084@wasm") !== -1 || errStr.indexOf("dynCall_") !== -1) {
-                        console.warn("[FCMA Unity Suppressed Catch]:", errStr);
-                        return;
-                    }
-                    setError(`Khoi dong game that bai: ${error}`);
+                    console.error("[FCMA Unity Startup Failure]:", error);
+                    setError("Khoi dong game that bai: " + error);
                 });
             };
 
