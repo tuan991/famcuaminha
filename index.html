@@ -651,26 +651,32 @@
                     <div class="dl-card" style="border-color: rgba(56, 189, 248, 0.4); box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);">
                         <img src="images/ip.png" alt="iOS Safari Client">
                         <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Bản iPhone / iPad (iOS)</h3>
-                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Chơi qua Safari, gắn vào Màn hình chính hoặc cài đặt trực tiếp qua OTA.</p>
+                        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 12px;">Cài đặt qua 3uTools, Scarlet hoặc gắn lối tắt Safari vào Màn hình chính.</p>
+                        
+                        <!-- Lưu ý tính toàn vẹn -->
+                        <div style="margin-bottom: 14px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #fca5a5; text-align: left; line-height: 1.5;">
+                            <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i> <strong>Tránh lỗi "Xác minh tính toàn vẹn":</strong> Apple chặn cài file trực tiếp từ web. Bạn hãy làm theo <strong>Cách 1 (3uTools)</strong> hoặc <strong>Cách 2 (Scarlet)</strong> để vào game 100% thành công!
+                        </div>
+
                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <!-- Cài trực tiếp OTA 1 chạm trên Safari -->
-                            <a href="itms-services://?action=download-manifest&url=https://famcuaminha.indevs.in/manifest.plist" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.4);">
-                                <i class="fa-brands fa-apple"></i> Cài Trực Tiếp Trên Safari (OTA 1-Chạm)
-                            </a>
-                            <!-- Nút Hướng Dẫn Gắn Vào Màn Hình Chính -->
-                            <button onclick="document.getElementById('iosSafariModal').style.display='flex'" class="btn btn-ios" style="width: 100%; justify-content: center; cursor: pointer; border-color: #38bdf8;">
-                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Hướng Dẫn Gắn Vào Màn Hình Chính
+                            <!-- Nút Hướng Dẫn Cài iOS Tránh Lỗi Xác Minh -->
+                            <button onclick="document.getElementById('iosFixModal').style.display='flex'" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #0284c7, #0369a1); box-shadow: 0 10px 25px rgba(2, 132, 199, 0.4); font-weight: 700; cursor: pointer;">
+                                <i class="fa-solid fa-circle-question"></i> Hướng Dẫn Cài iOS 100% Không Lỗi
                             </button>
+
                             <!-- Tải File Gốc IPA -->
-                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 13px; padding: 10px 16px;">
+                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-accent" style="width: 100%; justify-content: center;">
                                 <i class="fa-solid fa-file-arrow-down"></i> Tải File Gốc FCMA.ipa (40MB)
                             </a>
+
+                            <!-- Nút Hướng Dẫn Gắn Vào Màn Hình Chính Safari -->
+                            <button onclick="document.getElementById('iosSafariModal').style.display='flex'" class="btn btn-ios" style="width: 100%; justify-content: center; cursor: pointer; border-color: #38bdf8;">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i> Gắn Lối Tắt FCMA Vào Safari
+                            </button>
+
                             <a href="https://drive.google.com/file/d/1EEOZFGiMGffsMCWB6_xKkPEB7booW6WQ/view" target="_blank" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 12px; padding: 8px 12px; opacity: 0.75;">
                                 <i class="fa-brands fa-google-drive"></i> Link Dự Phòng Google Drive (Bản IPA)
                             </a>
-                        </div>
-                        <div style="margin-top: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 10px 12px; font-size: 12px; color: #bae6fd; text-align: left; line-height: 1.5;">
-                            <i class="fa-solid fa-lightbulb" style="color: #38bdf8;"></i> <strong>Mẹo cài IPA 100% thành công:</strong> Cắm iPhone vào máy tính qua cáp sạc -> Mở <strong>3uTools</strong> (đã có sẵn trên máy) -> Kéo file <code>FCMA.ipa</code> vào mục Apps để cài đặt tự động trong 30 giây!
                         </div>
                     </div>
                 </div>
@@ -805,6 +811,59 @@
             </div>
             <div style="text-align: center; margin-top: 20px;">
                 <button onclick="document.getElementById('iosSafariModal').style.display='none'" class="btn btn-primary" style="width: 100%; justify-content: center;">Đã Hiểu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hướng Dẫn Cài Đặt iOS Không Bị Lỗi Tính Toàn Vẹn -->
+    <div id="iosFixModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: #1e293b; border: 1px solid #38bdf8; border-radius: 20px; max-width: 520px; width: 100%; padding: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); color: #fff; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button onclick="document.getElementById('iosFixModal').style.display='none'" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #94a3b8; font-size: 20px; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <i class="fa-brands fa-apple" style="font-size: 38px; color: #38bdf8; margin-bottom: 8px;"></i>
+                <h3 style="font-size: 20px; font-weight: 800; color: #fff;">HƯỚNG DẪN CÀI ĐẶT IPHONE (iOS)</h3>
+                <p style="font-size: 13px; color: #fca5a5; margin-top: 5px;">Khắc phục 100% lỗi "Không thể xác minh tính toàn vẹn của ứng dụng"</p>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 16px; font-size: 14px; line-height: 1.5;">
+                <!-- Cách 1 -->
+                <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(56, 189, 248, 0.4); padding: 16px; border-radius: 14px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="background: #22c55e; color: #fff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px;">CÁCH 1</span>
+                        <strong style="color: #4ade80; font-size: 15px;">Dùng 3uTools trên Máy Tính (Khuyên Dùng - Chuẩn 100%)</strong>
+                    </div>
+                    <ol style="margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 13px; display: flex; flex-direction: column; gap: 6px;">
+                        <li>Tải file <strong>FCMA.ipa</strong> về máy tính.</li>
+                        <li>Tải và mở phần mềm <strong>3uTools</strong> (tại <a href="https://www.3u.com" target="_blank" style="color: #38bdf8; text-decoration: underline;">3u.com</a>).</li>
+                        <li>Cắm cáp sạc kết nối iPhone với máy tính -> Bấm "Tin cậy" trên màn hình iPhone.</li>
+                        <li>Trên 3uTools, chọn mục <strong>Toolbox</strong> -> chọn <strong>IPA Signature</strong> -> Thêm file <strong>FCMA.ipa</strong>.</li>
+                        <li>Chọn <strong>Sign with Apple ID</strong> (nhập tài khoản Apple ID cá nhân của bạn) -> Bấm <strong>Start Signing</strong>.</li>
+                        <li>Ký xong, bấm cài đặt vào iPhone là vào game chơi vĩnh viễn không bao giờ bị thu hồi hay lỗi xác minh!</li>
+                    </ol>
+                </div>
+
+                <!-- Cách 2 -->
+                <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(249, 115, 22, 0.4); padding: 16px; border-radius: 14px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="background: #f97316; color: #fff; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px;">CÁCH 2</span>
+                        <strong style="color: #fb923c; font-size: 15px;">Cài Trực Tiếp Bằng Scarlet / ESign (Không Cần Máy Tính)</strong>
+                    </div>
+                    <ol style="margin: 0; padding-left: 20px; color: #cbd5e1; font-size: 13px; display: flex; flex-direction: column; gap: 6px;">
+                        <li>Dùng Safari trên iPhone mở trang <a href="https://usescarlet.com" target="_blank" style="color: #38bdf8; text-decoration: underline;">usescarlet.com</a> và bấm <strong>Direct Install</strong> để cài Scarlet.</li>
+                        <li>Tải file <strong>FCMA.ipa</strong> về iPhone (lưu vào Tệp / Files).</li>
+                        <li>Mở ứng dụng <strong>Scarlet</strong> -> Bấm nút nhập file ở góc trên -> Chọn file <strong>FCMA.ipa</strong> vừa tải để Scarlet tự động cài đặt.</li>
+                        <li>Nếu iPhone báo <em>"Nhà phát triển chưa tin cậy"</em>: Vào <strong>Cài đặt máy -> Cài đặt chung -> Quản lý VPN & Thiết bị</strong> -> Bấm <strong>Tin cậy</strong> là xong!</li>
+                    </ol>
+                </div>
+
+                <!-- Lưu ý iOS 16+ -->
+                <div style="background: rgba(234, 179, 8, 0.1); border: 1px solid rgba(234, 179, 8, 0.3); padding: 12px; border-radius: 12px; font-size: 12px; color: #fef08a;">
+                    <i class="fa-solid fa-lightbulb" style="color: #facc15;"></i> <strong>Dành cho iOS 16, 17, 18 trở lên:</strong> Nếu mở game bị văng, vào <strong>Cài đặt -> Quyền riêng tư & Bảo mật -> Chế độ nhà phát triển (Developer Mode) -> Bật On</strong> và khởi động lại iPhone.
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="document.getElementById('iosFixModal').style.display='none'" class="btn btn-primary" style="width: 100%; justify-content: center; cursor: pointer;">Đã Hiểu Cách Cài</button>
             </div>
         </div>
     </div>
