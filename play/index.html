@@ -343,7 +343,7 @@
     </div>
 
     <script>
-        const BUILD_VERSION = "20261015_fcma_v11_safari_touch_fix";
+        const BUILD_VERSION = "20261015_fcma_v12_res_sync";
 
         window.FCMA_WS_FALLBACK = "wss://veterans-simple-validation-safe.trycloudflare.com";
         window.FCMA_WS_URL = window.FCMA_WS_FALLBACK;
@@ -557,14 +557,14 @@
                         try {
                             const dbs = await indexedDB.databases();
                             for (const db of dbs) {
-                                if (db.name && (db.name.indexOf("Unity") !== -1 || db.name.indexOf("fcma") !== -1)) {
-                                    indexedDB.deleteDatabase(db.name);
-                                }
+                                try { indexedDB.deleteDatabase(db.name); } catch (_) {}
                             }
                         } catch (e) {}
                     }
                     if (window.indexedDB && indexedDB.deleteDatabase) {
                         try { indexedDB.deleteDatabase("UnityCache"); } catch (e) {}
+                        try { indexedDB.deleteDatabase("/idbfs"); } catch (e) {}
+                        try { indexedDB.deleteDatabase("fcma"); } catch (e) {}
                     }
                     if (window.caches && caches.keys) {
                         try {
