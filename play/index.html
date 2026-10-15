@@ -343,7 +343,7 @@
     </div>
 
     <script>
-        const BUILD_VERSION = "20261015_fcma_v9_safari_fix";
+        const BUILD_VERSION = "20261015_fcma_v10_mob_npc_fix";
 
         window.FCMA_WS_FALLBACK = "wss://veterans-simple-validation-safe.trycloudflare.com";
         window.FCMA_WS_URL = window.FCMA_WS_FALLBACK;
@@ -414,29 +414,11 @@
         // Notify engine that this client is running in mobile mode
         window.NRO_IS_MOBILE = isMobile;
 
-        // Set stable canvas resolution:
-        // Cap DPR to 2.0 max to prevent GPU out-of-memory and context loss on Safari
-        if (isMobile) {
-            const dpr = Math.min(window.devicePixelRatio || 1, 2.0);
-            const longSide = Math.max(screen.width, screen.height);
-            const shortSide = Math.min(screen.width, screen.height);
-            let w = Math.round(longSide * dpr);
-            let h = Math.round(shortSide * dpr);
-            const maxLong = 1920;
-            if (w > maxLong) {
-                h = Math.round(h * maxLong / w);
-                w = maxLong;
-            }
-            if (w < 960) {
-                h = Math.round(h * 960 / w);
-                w = 960;
-            }
-            unityCanvas.width = w;
-            unityCanvas.height = h;
-        } else {
-            unityCanvas.width = 1024;
-            unityCanvas.height = 600;
-        }
+        // Internal render resolution: 1024x600 for all platforms (Mobile, iOS Safari, PC)
+        // This guarantees zoomLevel = 2 is always selected, camera math doesn't break on small maps,
+        // and mob/NPC culling and hitboxes are 100% accurate without lag.
+        unityCanvas.width = 1024;
+        unityCanvas.height = 600;
 
         console.info(
             `[FCMA-DISPLAY] iOS=${isIOS} isMobile=${isMobile} CanvasBuffer=${unityCanvas.width}x${unityCanvas.height}`
@@ -480,13 +462,14 @@
         const portraitMq = window.matchMedia ? window.matchMedia("(orientation: portrait)") : null;
 
         function layout() {
-            const vw = window.innerWidth || document.documentElement.clientWidth;
-            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const vp = window.visualViewport;
+            const vw = (vp && vp.width) || window.innerWidth || document.documentElement.clientWidth;
+            const vh = (vp && vp.height) || window.innerHeight || document.documentElement.clientHeight;
             const portrait = portraitMq ? portraitMq.matches : vh > vw;
 
             rotateOverlay.classList.toggle("is-visible", isMobile && portrait);
 
-            const aspect = (unityCanvas.width || 1024) / (unityCanvas.height || 600);
+            const aspect = 1024 / 600;
             let availW = vw;
             let availH = vh;
             let cw = availW;
