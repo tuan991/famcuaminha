@@ -2,19 +2,19 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="FCMA Online">
     <meta name="theme-color" content="#000000">
     <link rel="icon" href="/favicon-32x32.png" type="image/png">
-    <title>Ngọc Rồng FCMA - Chơi Trực Tiếp Trên Web</title>
+    <title>Ngọc Rồng FCMA - Chơi Trực Tiếp Trên Web Safari & Trình Duyệt</title>
     <style>
         :root {
             color-scheme: dark;
             --bg: #000;
-            --panel: rgba(10, 10, 10, 0.88);
+            --panel: rgba(10, 10, 10, 0.92);
             --border: rgba(255, 255, 255, 0.12);
             --text: #f6f6f6;
             --text-soft: rgba(246, 246, 246, 0.72);
@@ -25,70 +25,54 @@
 
         * {
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         html,
         body {
+            position: fixed;
             width: 100%;
             height: 100%;
+            height: 100dvh;
             margin: 0;
+            padding: 0;
             overflow: hidden;
-            background: var(--bg);
-            font-family: "Segoe UI", sans-serif;
-        }
-
-        body {
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: var(--text);
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: auto;
         }
 
         #app {
             position: fixed;
             inset: 0;
+            width: 100vw;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
             background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #unity-canvas {
             display: block;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            outline: none;
-        }
-
-
-        /* Full-window nhưng không dùng Fullscreen API.
-           Canvas chỉ lấp đầy vùng trình duyệt; Unity tự quản lý backing resolution. */
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #000;
-        }
-
-        #app {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #000;
-        }
-
-        #unity-canvas {
-            display: block;
-            width: 100% !important;
-            height: 100% !important;
-            margin: 0;
-            padding: 0;
             border: 0;
             outline: none;
             background: #000;
             touch-action: none;
             user-select: none;
             -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            image-rendering: pixelated;
         }
 
         #unity-fullscreen-button {
@@ -109,37 +93,39 @@
             z-index: 3;
             padding: 24px;
             background:
-                radial-gradient(circle at 50% 35%, rgba(255, 155, 56, 0.12), transparent 38%),
-                linear-gradient(180deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.90));
+                radial-gradient(circle at 50% 35%, rgba(255, 155, 56, 0.16), transparent 42%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.94));
         }
 
         .start-card {
-            width: min(420px, calc(100% - 32px));
+            width: min(440px, calc(100% - 32px));
             padding: 24px;
             text-align: center;
             border: 1px solid var(--border);
             border-radius: 18px;
             background: var(--panel);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
         .start-title {
             margin: 0 0 10px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 16px rgba(255, 155, 56, 0.5);
         }
 
         .start-description {
-            margin: 0 0 18px;
+            margin: 0 0 16px;
             color: var(--text-soft);
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             line-height: 1.5;
         }
 
         #play-game-button {
             width: 100%;
-            min-height: 56px;
+            min-height: 54px;
             padding: 12px 20px;
             border: 0;
             border-radius: 14px;
@@ -148,10 +134,9 @@
             font-weight: 800;
             letter-spacing: 0.04em;
             color: #1b1208;
-            background: linear-gradient(180deg, #ffd45a, var(--accent));
-            box-shadow: 0 8px 28px rgba(255, 155, 56, 0.28);
+            background: linear-gradient(135deg, #ffd45a, var(--accent));
+            box-shadow: 0 8px 25px rgba(255, 155, 56, 0.35);
             touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
 
         #play-game-button:hover {
@@ -168,8 +153,20 @@
             transform: none;
         }
 
+        .ios-tip-box {
+            margin-top: 14px;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: #d1d5db;
+            line-height: 1.4;
+            text-align: left;
+        }
+
         #loading {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.92));
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.95));
             z-index: 3;
         }
 
@@ -180,6 +177,7 @@
             border-radius: 18px;
             background: var(--panel);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .loading-title {
@@ -268,7 +266,7 @@
         #error-box.is-hidden,
         #start-screen.is-hidden,
         #loading.is-hidden {
-            display: none;
+            display: none !important;
         }
 
         #webgl-input-layer {
@@ -303,14 +301,8 @@
         }
 
         @keyframes rotate-phone {
-            0%,
-            100% {
-                transform: rotate(0deg);
-            }
-
-            50% {
-                transform: rotate(90deg);
-            }
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
         }
     </style>
 </head>
@@ -320,10 +312,13 @@
 
         <div id="start-screen">
             <div class="start-card">
-                <p class="start-title" style="color: #f97316; font-weight: 800; font-size: 26px; text-shadow: 0 0 15px rgba(249, 115, 22, 0.6);">NGỌC RỒNG FCMA</p>
-                <p class="start-description">Chơi trực tiếp trên Safari iPhone / iPad & Trình duyệt Web không cần cài đặt!</p>
-                <button id="play-game-button" type="button" style="background: linear-gradient(135deg, #f97316, #ea580c); font-weight: bold; font-size: 18px; padding: 14px 28px; border-radius: 12px; cursor: pointer; box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);">VÀO CHƠI NGAY</button>
-                <div style="margin-top: 15px;">
+                <p class="start-title">NGỌC RỒNG FCMA</p>
+                <p class="start-description">Chơi mượt trực tiếp trên Safari iPhone, iPad & Trình duyệt Web không cần cài đặt ứng dụng!</p>
+                <button id="play-game-button" type="button">VÀO CHƠI NGAY</button>
+                <div class="ios-tip-box">
+                    💡 <b>Mẹo cho Safari iOS:</b> Bấm biểu tượng <b>Chia sẻ</b> (Share) ➜ chọn <b>"Thêm vào MH chính"</b> (Add to Home Screen) để mở game toàn màn hình không bị vướng thanh Safari!
+                </div>
+                <div style="margin-top: 14px;">
                     <a href="/" style="color: #38bdf8; font-size: 13px; text-decoration: none;">← Về Trang Chủ FCMA</a>
                 </div>
             </div>
@@ -348,7 +343,9 @@
     </div>
 
     <script>
-                window.FCMA_WS_FALLBACK = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+        const BUILD_VERSION = "20261015_fcma_v9_safari_fix";
+
+        window.FCMA_WS_FALLBACK = "wss://veterans-simple-validation-safe.trycloudflare.com";
         window.FCMA_WS_URL = window.FCMA_WS_FALLBACK;
 
         async function fetchOnlineWsUrl() {
@@ -393,6 +390,7 @@
                 return true;
             }
         });
+
         const unityCanvas = document.getElementById("unity-canvas");
         const startScreen = document.getElementById("start-screen");
         const playGameButton = document.getElementById("play-game-button");
@@ -407,22 +405,42 @@
         let unityInstance = null;
         let gameStartRequested = false;
 
-        const BUILD_VERSION = "20261015_fcma_v8_final";
+        const ua = navigator.userAgent;
+        const isIPad = /iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+        const isIPhone = /iPhone|iPod/.test(ua);
+        const isIOS = isIPhone || isIPad;
+        const isMobile = isIOS || /Android|Mobile/i.test(ua);
 
-        const isIOS =
-            /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-        const isMobile = isIOS || /Android|Mobi/i.test(navigator.userAgent);
+        // Notify engine that this client is running in mobile mode
+        window.NRO_IS_MOBILE = isMobile;
 
-        // Retina-quality WebGL backing buffer.
-        // iOS Safari can use the real Retina scale up to 3x, matching TestFlight
-        // much more closely. Other WebGL platforms are capped at 2x for balance.
-        const IOS_DPR_CAP = 3.0;
-        const OTHER_DPR_CAP = 2.0;
-        const browserDpr = Math.max(1, window.devicePixelRatio || 1);
-        const renderDpr = isIOS
-            ? Math.min(browserDpr, IOS_DPR_CAP)
-            : Math.min(browserDpr, OTHER_DPR_CAP);
+        // Set stable canvas resolution:
+        // Cap DPR to 2.0 max to prevent GPU out-of-memory and context loss on Safari
+        if (isMobile) {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2.0);
+            const longSide = Math.max(screen.width, screen.height);
+            const shortSide = Math.min(screen.width, screen.height);
+            let w = Math.round(longSide * dpr);
+            let h = Math.round(shortSide * dpr);
+            const maxLong = 1920;
+            if (w > maxLong) {
+                h = Math.round(h * maxLong / w);
+                w = maxLong;
+            }
+            if (w < 960) {
+                h = Math.round(h * 960 / w);
+                w = 960;
+            }
+            unityCanvas.width = w;
+            unityCanvas.height = h;
+        } else {
+            unityCanvas.width = 1024;
+            unityCanvas.height = 600;
+        }
+
+        console.info(
+            `[FCMA-DISPLAY] iOS=${isIOS} isMobile=${isMobile} CanvasBuffer=${unityCanvas.width}x${unityCanvas.height}`
+        );
 
         const unityConfig = {
             dataUrl: "./Build/WebGL.data?v=" + BUILD_VERSION,
@@ -432,8 +450,7 @@
             productName: "binhnro",
             productVersion: "3.0.2",
             autoSyncPersistentDataPath: true,
-            matchWebGLToCanvasSize: true,
-            devicePixelRatio: renderDpr,
+            matchWebGLToCanvasSize: false,
             errorHandler: function (message, filename, lineno) {
                 var str = (message && (message.message || message.stack || String(message))) || "";
                 if (str.toLowerCase().indexOf("division") !== -1 || str.indexOf("2084@wasm") !== -1 || str.indexOf("dynCall_") !== -1) {
@@ -443,12 +460,6 @@
                 return false;
             }
         };
-
-        console.info(
-            "[WEBGL-QUALITY] iOS=" + isIOS +
-            " browserDPR=" + browserDpr +
-            " renderDPR=" + renderDpr
-        );
 
         function setError(message) {
             errorBox.textContent = message;
@@ -462,22 +473,47 @@
                 window.focus();
                 unityCanvas.focus({ preventScroll: true });
             } catch (error) {
-                try {
-                    unityCanvas.focus();
-                } catch (ignoreError) {}
+                try { unityCanvas.focus(); } catch (ignoreError) {}
             }
         }
 
-        function toggleRotateOverlay() {
-            const isPortrait = window.innerHeight > window.innerWidth;
-            rotateOverlay.classList.toggle("is-visible", isMobile && isPortrait);
+        const portraitMq = window.matchMedia ? window.matchMedia("(orientation: portrait)") : null;
+
+        function layout() {
+            const vw = window.innerWidth || document.documentElement.clientWidth;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const portrait = portraitMq ? portraitMq.matches : vh > vw;
+
+            rotateOverlay.classList.toggle("is-visible", isMobile && portrait);
+
+            const aspect = (unityCanvas.width || 1024) / (unityCanvas.height || 600);
+            let availW = vw;
+            let availH = vh;
+            let cw = availW;
+            let ch = availW / aspect;
+            if (ch > availH) {
+                ch = availH;
+                cw = availH * aspect;
+            }
+            cw = Math.floor(cw);
+            ch = Math.floor(ch);
+
+            unityCanvas.style.width = cw + "px";
+            unityCanvas.style.height = ch + "px";
+            unityCanvas.style.position = "absolute";
+            unityCanvas.style.top = "50%";
+            unityCanvas.style.left = "50%";
+            unityCanvas.style.transform = "translate(-50%, -50%)";
+        }
+
+        function layoutSoon() {
+            [20, 100, 300, 600, 1000].forEach(function (ms) {
+                setTimeout(layout, ms);
+            });
         }
 
         function ensureWebglInputLayer() {
-            if (webglInputLayer) {
-                return webglInputLayer;
-            }
-
+            if (webglInputLayer) return webglInputLayer;
             webglInputLayer = document.createElement("div");
             webglInputLayer.id = "webgl-input-layer";
             document.body.appendChild(webglInputLayer);
@@ -485,10 +521,7 @@
         }
 
         function isWebglInputNode(node) {
-            if (!(node instanceof HTMLElement)) {
-                return false;
-            }
-
+            if (!(node instanceof HTMLElement)) return false;
             return node.matches(
                 "#webgl-input-overlay, .webgl-input-overlay, .webgl-input, input.webgl-input, textarea.webgl-input"
             );
@@ -496,109 +529,46 @@
 
         function moveWebglInputNode(node) {
             const layer = ensureWebglInputLayer();
-
-            if (!isWebglInputNode(node) || layer.contains(node)) {
-                return;
-            }
-
+            if (!isWebglInputNode(node) || layer.contains(node)) return;
             layer.appendChild(node);
         }
 
         function normalizeWebglInputTree(rootNode) {
-            if (!(rootNode instanceof HTMLElement)) {
-                return;
-            }
-
-            if (isWebglInputNode(rootNode)) {
-                moveWebglInputNode(rootNode);
-            }
-
-            rootNode
-                .querySelectorAll(
-                    "#webgl-input-overlay, .webgl-input-overlay, .webgl-input, input.webgl-input, textarea.webgl-input"
-                )
-                .forEach(moveWebglInputNode);
+            if (!(rootNode instanceof HTMLElement)) return;
+            if (isWebglInputNode(rootNode)) moveWebglInputNode(rootNode);
+            rootNode.querySelectorAll(
+                "#webgl-input-overlay, .webgl-input-overlay, .webgl-input, input.webgl-input, textarea.webgl-input"
+            ).forEach(moveWebglInputNode);
         }
 
         function observeWebglInputOverlay() {
             ensureWebglInputLayer();
-
-            if (webglInputObserver) {
-                webglInputObserver.disconnect();
-            }
-
+            if (webglInputObserver) webglInputObserver.disconnect();
             webglInputObserver = new MutationObserver(function (mutationList) {
                 mutationList.forEach(function (mutation) {
                     mutation.addedNodes.forEach(normalizeWebglInputTree);
                 });
             });
-
-            webglInputObserver.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-
+            webglInputObserver.observe(document.body, { childList: true, subtree: true });
             normalizeWebglInputTree(document.body);
         }
 
-        function applyViewportSize() {
-            document.documentElement.style.width = "100%";
-            document.documentElement.style.height = "100%";
-            document.documentElement.style.margin = "0";
-            document.documentElement.style.padding = "0";
-            document.documentElement.style.overflow = "hidden";
-
-            document.body.style.width = "100%";
-            document.body.style.height = "100%";
-            document.body.style.margin = "0";
-            document.body.style.padding = "0";
-            document.body.style.overflow = "hidden";
-
-            const app = document.getElementById("app");
-            if (app) {
-                app.style.position = "fixed";
-                app.style.inset = "0";
-                app.style.width = "100%";
-                app.style.height = "100%";
-                app.style.margin = "0";
-                app.style.padding = "0";
-                app.style.overflow = "hidden";
-            }
-
-            // Không ép pixel width/height từ visualViewport.
-            // Việc ép riêng width/height trước đây làm logical Screen size thay đổi
-            // và MotherCanvas có thể chọn zoomLevel sai trên desktop.
-            unityCanvas.style.width = "100%";
-            unityCanvas.style.height = "100%";
-            unityCanvas.style.margin = "0";
-            unityCanvas.style.padding = "0";
-            unityCanvas.style.display = "block";
-        }
-
         function startGameFromUserGesture() {
-            if (gameStartRequested || unityInstance) {
-                return;
-            }
-
+            if (gameStartRequested || unityInstance) return;
             gameStartRequested = true;
             playGameButton.disabled = true;
 
-            // Chỉ từ thời điểm người dùng bấm CHƠI GAME mới bắt đầu Unity/WebGL.
             startScreen.classList.add("is-hidden");
             loading.classList.remove("is-hidden");
             loadingText.textContent = "Đang tải game...";
             progressBar.style.width = "0%";
 
-            // WebGL input observer chỉ cần hoạt động khi Unity chuẩn bị chạy.
             observeWebglInputOverlay();
-
-            // User gesture giúp browser cho phép focus/audio ổn định hơn.
             focusUnityCanvas();
-
             loadUnity();
         }
 
-                async function clearStaleUnityCache() {
+        async function clearStaleUnityCache() {
             try {
                 const storedVer = localStorage.getItem("FCMA_BUILD_VER");
                 if (storedVer !== BUILD_VERSION) {
@@ -634,31 +604,34 @@
         async function loadUnity() {
             await fetchOnlineWsUrl();
             await clearStaleUnityCache();
+            layout();
+
             const loaderScript = document.createElement("script");
             loaderScript.src = "./Build/WebGL.loader.js?v=" + BUILD_VERSION;
 
             loaderScript.onload = function () {
                 if (typeof createUnityInstance !== "function") {
-                    setError("Khong tim thay createUnityInstance trong loader.");
+                    setError("Không tìm thấy createUnityInstance trong loader.");
                     return;
                 }
 
                 createUnityInstance(unityCanvas, unityConfig, function (progress) {
                     const safeProgress = Math.max(0, Math.min(1, progress || 0));
                     progressBar.style.width = `${safeProgress * 100}%`;
-                    loadingText.textContent = `Dang tai game: ${Math.round(safeProgress * 100)}%`;
+                    loadingText.textContent = `Đang tải tài nguyên: ${Math.round(safeProgress * 100)}%`;
                 }).then(function (instance) {
                     unityInstance = instance;
                     loading.classList.add("is-hidden");
+                    layout();
                     focusUnityCanvas();
                 }).catch(function (error) {
                     console.error("[FCMA Unity Startup Failure]:", error);
-                    setError("Khoi dong game that bai: " + error);
+                    setError("Khởi động game thất bại: " + error);
                 });
             };
 
             loaderScript.onerror = function () {
-                setError("Khong tai duoc file WebGL.loader.js.");
+                setError("Không tải được file WebGL.loader.js.");
             };
 
             document.body.appendChild(loaderScript);
@@ -668,66 +641,55 @@
             focusUnityCanvas();
         });
 
-        unityCanvas.addEventListener("dblclick", function (event) {
-            event.preventDefault();
-            event.stopPropagation();
+        // Prevent accidental gesture / double tap zoom on Safari
+        document.addEventListener("gesturestart", function (e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener("gesturechange", function (e) { e.preventDefault(); }, { passive: false });
+        document.addEventListener("gestureend", function (e) { e.preventDefault(); }, { passive: false });
 
-            if (event.stopImmediatePropagation) {
-                event.stopImmediatePropagation();
+        let lastTouchEndTime = 0;
+        document.addEventListener("touchend", function (e) {
+            const now = Date.now();
+            if (now - lastTouchEndTime <= 300 && (e.target === unityCanvas || e.target.closest("#app"))) {
+                e.preventDefault();
             }
+            lastTouchEndTime = now;
+        }, { passive: false });
 
-            return false;
-        }, true);
-
-        ["gesturestart", "gesturechange", "gestureend"].forEach(function (eventName) {
-            document.addEventListener(eventName, function (event) {
-                if (
-                    event.target === unityCanvas ||
-                    (unityCanvas.parentElement &&
-                     unityCanvas.parentElement.contains(event.target))
-                ) {
-                    event.preventDefault();
+        document.addEventListener("touchmove", function (e) {
+            if (e.target === unityCanvas || e.target.closest("#app")) {
+                if (!e.target.closest("#webgl-input-layer")) {
+                    e.preventDefault();
                 }
-            }, {
-                capture: true,
-                passive: false
-            });
-        });
+            }
+        }, { passive: false });
 
         playGameButton.addEventListener("click", startGameFromUserGesture, { once: true });
 
         window.addEventListener("load", function () {
-            // Chỉ chuẩn hóa giao diện. KHÔNG khởi động Unity ở đây.
-            applyViewportSize();
-            toggleRotateOverlay();
+            layout();
         });
 
-        window.addEventListener("resize", function () {
-            applyViewportSize();
-            toggleRotateOverlay();
-        });
+        window.addEventListener("resize", layoutSoon);
+        window.addEventListener("orientationchange", layoutSoon);
 
-        window.addEventListener("orientationchange", function () {
-            applyViewportSize();
-            toggleRotateOverlay();
-
-            setTimeout(function () {
-                applyViewportSize();
-                toggleRotateOverlay();
-            }, 100);
-
-            setTimeout(function () {
-                applyViewportSize();
-                toggleRotateOverlay();
-            }, 300);
-        });
+        if (portraitMq) {
+            if (portraitMq.addEventListener) portraitMq.addEventListener("change", layoutSoon);
+            else if (portraitMq.addListener) portraitMq.addListener(layoutSoon);
+        }
 
         if (window.visualViewport) {
-            window.visualViewport.addEventListener("resize", function () {
-                applyViewportSize();
-                toggleRotateOverlay();
-            });
+            window.visualViewport.addEventListener("resize", layoutSoon);
         }
+
+        // Monitor if game resolution changes dynamically
+        let lastCanvasDim = "";
+        setInterval(function () {
+            const s = unityCanvas.width + "x" + unityCanvas.height;
+            if (s !== lastCanvasDim) {
+                lastCanvasDim = s;
+                layout();
+            }
+        }, 500);
     </script>
 </body>
 </html>
