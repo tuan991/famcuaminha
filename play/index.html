@@ -353,6 +353,13 @@
 
         async function fetchOnlineWsUrl() {
             try {
+                var searchParams = new URLSearchParams(window.location.search);
+                var paramWs = searchParams.get("ws");
+                if (paramWs && paramWs.indexOf("://") !== -1) {
+                    window.FCMA_WS_URL = paramWs;
+                    console.log("[FCMA Online] WebSocket URL set from query param to:", window.FCMA_WS_URL);
+                    return;
+                }
                 const res = await fetch("./server_config.json?v=" + BUILD_VERSION + "&t=" + Date.now());
                 if (res.ok) {
                     const data = await res.json();
