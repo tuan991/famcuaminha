@@ -348,7 +348,25 @@
     </div>
 
     <script>
-                window.FCMA_WS_URL = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+                window.FCMA_WS_FALLBACK = "wss://reasonable-dam-bodies-building.trycloudflare.com";
+        window.FCMA_WS_URL = window.FCMA_WS_FALLBACK;
+
+        async function fetchOnlineWsUrl() {
+            try {
+                const res = await fetch("./server_config.json?v=" + BUILD_VERSION + "&t=" + Date.now());
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.ws_url && data.ws_url.indexOf("://") !== -1) {
+                        window.FCMA_WS_URL = data.ws_url;
+                        console.log("[FCMA Online] WebSocket URL set to:", window.FCMA_WS_URL);
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn("[FCMA Online] Failed to load server_config.json, using fallback:", e);
+            }
+        }
+        fetchOnlineWsUrl();
 
         window.addEventListener("error", function (event) {
             var msg = (event && (event.message || event.error && event.error.message || String(event))) || "";
@@ -607,6 +625,7 @@
         }
 
         async function loadUnity() {
+            await fetchOnlineWsUrl();
             await clearStaleUnityCache();
             const loaderScript = document.createElement("script");
             loaderScript.src = "./Build/WebGL.loader.js?v=" + BUILD_VERSION;
