@@ -343,7 +343,7 @@
     </div>
 
     <script>
-        const BUILD_VERSION = "20261015_fcma_v10_mob_npc_fix";
+        const BUILD_VERSION = "20261015_fcma_v11_safari_touch_fix";
 
         window.FCMA_WS_FALLBACK = "wss://veterans-simple-validation-safe.trycloudflare.com";
         window.FCMA_WS_URL = window.FCMA_WS_FALLBACK;
@@ -414,11 +414,20 @@
         // Notify engine that this client is running in mobile mode
         window.NRO_IS_MOBILE = isMobile;
 
-        // Internal render resolution: 1024x600 for all platforms (Mobile, iOS Safari, PC)
-        // This guarantees zoomLevel = 2 is always selected, camera math doesn't break on small maps,
-        // and mob/NPC culling and hitboxes are 100% accurate without lag.
-        unityCanvas.width = 1024;
-        unityCanvas.height = 600;
+        // Internal render resolution:
+        // Height 600 guarantees MotherCanvas zoomLevel = 2 is always selected.
+        // Aspect ratio dynamically adapts to the device landscape screen to prevent stretching
+        // and align touch input 1:1 without letterboxing.
+        if (isMobile) {
+            const longSide = Math.max(screen.width || 800, screen.height || 450);
+            const shortSide = Math.min(screen.width || 800, screen.height || 450);
+            const aspect = Math.max(1.33, Math.min(2.4, longSide / shortSide));
+            unityCanvas.height = 600;
+            unityCanvas.width = Math.round(600 * aspect);
+        } else {
+            unityCanvas.width = 1024;
+            unityCanvas.height = 600;
+        }
 
         console.info(
             `[FCMA-DISPLAY] iOS=${isIOS} isMobile=${isMobile} CanvasBuffer=${unityCanvas.width}x${unityCanvas.height}`
@@ -469,24 +478,12 @@
 
             rotateOverlay.classList.toggle("is-visible", isMobile && portrait);
 
-            const aspect = 1024 / 600;
-            let availW = vw;
-            let availH = vh;
-            let cw = availW;
-            let ch = availW / aspect;
-            if (ch > availH) {
-                ch = availH;
-                cw = availH * aspect;
-            }
-            cw = Math.floor(cw);
-            ch = Math.floor(ch);
-
-            unityCanvas.style.width = cw + "px";
-            unityCanvas.style.height = ch + "px";
+            unityCanvas.style.width = "100%";
+            unityCanvas.style.height = "100%";
             unityCanvas.style.position = "absolute";
-            unityCanvas.style.top = "50%";
-            unityCanvas.style.left = "50%";
-            unityCanvas.style.transform = "translate(-50%, -50%)";
+            unityCanvas.style.top = "0";
+            unityCanvas.style.left = "0";
+            unityCanvas.style.transform = "none";
         }
 
         function layoutSoon() {
@@ -629,14 +626,6 @@
         document.addEventListener("gesturechange", function (e) { e.preventDefault(); }, { passive: false });
         document.addEventListener("gestureend", function (e) { e.preventDefault(); }, { passive: false });
 
-        let lastTouchEndTime = 0;
-        document.addEventListener("touchend", function (e) {
-            const now = Date.now();
-            if (now - lastTouchEndTime <= 300 && (e.target === unityCanvas || e.target.closest("#app"))) {
-                e.preventDefault();
-            }
-            lastTouchEndTime = now;
-        }, { passive: false });
 
         document.addEventListener("touchmove", function (e) {
             if (e.target === unityCanvas || e.target.closest("#app")) {
