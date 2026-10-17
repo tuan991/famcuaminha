@@ -304,6 +304,253 @@
             0%, 100% { transform: rotate(0deg); }
             50% { transform: rotate(90deg); }
         }
+
+        /* ========================================================
+           THUẦN ĐIỆN THOẠI - BỘ PHÍM ẢO CẢM ỨNG & JOYSTICK (MOBILE)
+           ======================================================== */
+        #mobile-touch-controls {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+            padding: env(safe-area-inset-top, 10px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 12px) env(safe-area-inset-left, 16px);
+        }
+
+        #mobile-touch-controls.is-active {
+            display: block;
+        }
+
+        /* Thanh tiện ích trên đỉnh (Toàn màn hình, Ẩn/Hiện phím) */
+        .mobile-top-bar {
+            position: absolute;
+            top: max(env(safe-area-inset-top, 8px), 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            pointer-events: auto;
+            z-index: 60;
+        }
+
+        .m-tool-btn {
+            background: rgba(15, 20, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: all 0.15s;
+            pointer-events: auto;
+            touch-action: manipulation;
+        }
+        .m-tool-btn:active {
+            transform: scale(0.92);
+            background: rgba(255, 155, 56, 0.4);
+            border-color: #ff9b38;
+        }
+
+        /* Vùng Cần Gạt Analog Joystick (Góc Trái Bên Dưới) */
+        .joystick-zone {
+            position: absolute;
+            left: max(env(safe-area-inset-left, 15px), 20px);
+            bottom: max(env(safe-area-inset-bottom, 15px), 25px);
+            width: 140px;
+            height: 140px;
+            pointer-events: auto;
+            touch-action: none;
+        }
+
+        .joystick-base {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(10, 15, 25, 0.65) 70%, rgba(255, 155, 56, 0.35) 100%);
+            border: 2px solid rgba(255, 155, 56, 0.6);
+            box-shadow: 0 0 25px rgba(255, 155, 56, 0.3), inset 0 0 15px rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .joystick-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffd45a 0%, #ff9b38 100%);
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(255, 155, 56, 0.7);
+            position: absolute;
+            transform: translate(0px, 0px);
+            pointer-events: none;
+        }
+
+        .joystick-arrows {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 13px;
+            font-weight: 900;
+        }
+        .j-arrow-up { position: absolute; top: 6px; }
+        .j-arrow-down { position: absolute; bottom: 6px; }
+        .j-arrow-left { position: absolute; left: 8px; }
+        .j-arrow-right { position: absolute; right: 8px; }
+
+        /* Vùng Cụm Nút Chiêu Thức & Tấn Công (Góc Phải Bên Dưới) */
+        .actions-zone {
+            position: absolute;
+            right: max(env(safe-area-inset-right, 15px), 20px);
+            bottom: max(env(safe-area-inset-bottom, 15px), 20px);
+            width: 220px;
+            height: 220px;
+            pointer-events: none;
+            touch-action: none;
+        }
+
+        /* Nút Tấn Công / Đánh Chính */
+        .btn-m-attack {
+            position: absolute;
+            right: 12px;
+            bottom: 16px;
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ff6b35 0%, #d9381e 100%);
+            border: 3px solid #ffba08;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+            color: #fff;
+            font-weight: 900;
+            font-size: 1.15rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.08s, filter 0.08s;
+        }
+        .btn-m-attack:active {
+            transform: scale(0.9);
+            filter: brightness(1.25);
+            box-shadow: 0 0 30px rgba(255, 186, 8, 0.9);
+        }
+        .btn-m-attack span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Nút Kỹ Năng / Chiêu Thức 1..5 */
+        .btn-m-skill {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #2563eb 0%, #1d4ed8 100%);
+            border: 2px solid #60a5fa;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.5);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.08s, filter 0.08s;
+        }
+        .btn-m-skill:active {
+            transform: scale(0.88);
+            filter: brightness(1.3);
+            border-color: #fff;
+        }
+        .btn-m-skill span { font-size: 0.58rem; opacity: 0.85; }
+
+        /* Bố trí các phím chiêu thức vòng cung công thái học */
+        .skill-1 { right: 104px; bottom: 16px; }
+        .skill-2 { right: 98px; bottom: 78px; }
+        .skill-3 { right: 58px; bottom: 118px; }
+        .skill-4 { right: 6px; bottom: 124px; }
+        .skill-5 { right: 154px; bottom: 42px; }
+
+        /* Nút Nhảy / Bay */
+        .btn-m-jump {
+            position: absolute;
+            right: 16px;
+            bottom: 106px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #059669 0%, #047857 100%);
+            border: 2px solid #34d399;
+            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.5);
+            color: #fff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            touch-action: none;
+            transition: transform 0.08s;
+        }
+        .btn-m-jump:active {
+            transform: scale(0.88);
+            filter: brightness(1.3);
+        }
+
+        /* Cụm Phím Tiện Ích Đậu Thần / Bản Đồ */
+        .aux-zone {
+            position: absolute;
+            left: 50%;
+            bottom: max(env(safe-area-inset-bottom, 12px), 18px);
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .btn-m-aux {
+            background: rgba(18, 24, 38, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            color: #fcd34d;
+            padding: 7px 14px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            pointer-events: auto;
+            cursor: pointer;
+            touch-action: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            transition: transform 0.08s;
+        }
+        .btn-m-aux:active {
+            transform: scale(0.92);
+            background: rgba(251, 191, 36, 0.3);
+            border-color: #fcd34d;
+        }
     </style>
 </head>
 <body>
@@ -340,6 +587,56 @@
         </div>
 
         <div id="error-box" class="is-hidden" role="alert"></div>
+
+        <!-- ========================================================
+             THUẦN ĐIỆN THOẠI - GIAO DIỆN PHÍM ẢO & JOYSTICK
+             ======================================================== -->
+        <div id="mobile-touch-controls">
+            <!-- Top Controls Bar -->
+            <div class="mobile-top-bar">
+                <button type="button" class="m-tool-btn" id="btn-toggle-ctrl">🎮 Phím: Bật</button>
+                <button type="button" class="m-tool-btn" id="btn-toggle-fs">⛶ Toàn Màn Hình</button>
+                <button type="button" class="m-tool-btn" id="btn-aux-menu">📜 Menu / Tab</button>
+            </div>
+
+            <!-- Left: Virtual Joystick D-Pad (Cần Gạt Di Chuyển 360 Độ) -->
+            <div class="joystick-zone" id="joystick-zone">
+                <div class="joystick-base" id="joystick-base">
+                    <div class="joystick-arrows">
+                        <span class="j-arrow-up">▲</span>
+                        <span class="j-arrow-down">▼</span>
+                        <span class="j-arrow-left">◀</span>
+                        <span class="j-arrow-right">▶</span>
+                    </div>
+                    <div class="joystick-thumb" id="joystick-thumb"></div>
+                </div>
+            </div>
+
+            <!-- Center Bottom: Phím Tiện Ích Đậu Thần / Bản Đồ -->
+            <div class="aux-zone">
+                <button type="button" class="btn-m-aux" id="btn-aux-dau">🫘 Đậu Thần [6]</button>
+                <button type="button" class="btn-m-aux" id="btn-aux-map">🗺️ Bản Đồ [M]</button>
+            </div>
+
+            <!-- Right: Action & Combat Skill Buttons (Cụm Chiêu Thức) -->
+            <div class="actions-zone">
+                <!-- Chiêu 1..5 bố trí công thái học -->
+                <button type="button" class="btn-m-skill skill-1" id="btn-skill-1">1<span>Chiêu</span></button>
+                <button type="button" class="btn-m-skill skill-2" id="btn-skill-2">2<span>Chiêu</span></button>
+                <button type="button" class="btn-m-skill skill-3" id="btn-skill-3">3<span>Chiêu</span></button>
+                <button type="button" class="btn-m-skill skill-4" id="btn-skill-4">4<span>Chiêu</span></button>
+                <button type="button" class="btn-m-skill skill-5" id="btn-skill-5">5<span>Chiêu</span></button>
+
+                <!-- Jump / Bay -->
+                <button type="button" class="btn-m-jump" id="btn-action-jump" title="Nhảy / Bay">🚀</button>
+
+                <!-- Main Attack / Đánh -->
+                <button type="button" class="btn-m-attack" id="btn-action-attack">
+                    ⚔️
+                    <span>ĐÁNH</span>
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -604,6 +901,7 @@
                     loading.classList.add("is-hidden");
                     layout();
                     focusUnityCanvas();
+                    initMobileTouchControls();
                 }).catch(function (error) {
                     console.error("[FCMA Unity Startup Failure]:", error);
                     setError("Khởi động game thất bại: " + error);
@@ -662,6 +960,292 @@
                 layout();
             }
         }, 500);
+
+        /* ========================================================
+           THUẦN ĐIỆN THOẠI - BỘ XỬ LÝ PHÍM CẢM ỨNG & JOYSTICK (JS)
+           ======================================================== */
+        const mobileControls = document.getElementById("mobile-touch-controls");
+        let activeDirections = { up: false, down: false, left: false, right: false };
+
+        function sendKeyEvent(type, code, key, keyCode) {
+            const event = new KeyboardEvent(type, {
+                key: key,
+                code: code,
+                keyCode: keyCode,
+                which: keyCode,
+                bubbles: true,
+                cancelable: true,
+                view: window
+            });
+            try {
+                Object.defineProperty(event, 'keyCode', { get: () => keyCode });
+                Object.defineProperty(event, 'which', { get: () => keyCode });
+            } catch (_) {}
+
+            if (unityCanvas) unityCanvas.dispatchEvent(event);
+            window.dispatchEvent(event);
+            document.dispatchEvent(event);
+        }
+
+        function triggerHaptic() {
+            if (navigator.vibrate) {
+                try { navigator.vibrate(12); } catch (_) {}
+            }
+        }
+
+        function bindTouchButton(elementId, onDown, onUp) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+
+            const handleDown = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                triggerHaptic();
+                if (onDown) onDown();
+            };
+
+            const handleUp = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (onUp) onUp();
+            };
+
+            el.addEventListener("touchstart", handleDown, { passive: false });
+            el.addEventListener("touchend", handleUp, { passive: false });
+            el.addEventListener("touchcancel", handleUp, { passive: false });
+            el.addEventListener("mousedown", handleDown);
+            el.addEventListener("mouseup", handleUp);
+            el.addEventListener("mouseleave", handleUp);
+        }
+
+        function initMobileTouchControls() {
+            if (!mobileControls) return;
+
+            // Hiển thị bộ phím ảo trên điện thoại / tablet hoặc màn hình cảm ứng
+            const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth < 1024;
+            if (isTouch) {
+                mobileControls.classList.add("is-active");
+            }
+
+            // --- 1. NÚT ĐÁNH / TẤN CÔNG (Enter / Space / J) ---
+            bindTouchButton("btn-action-attack",
+                () => {
+                    sendKeyEvent("keydown", "Space", " ", 32);
+                    sendKeyEvent("keydown", "Enter", "Enter", 13);
+                    sendKeyEvent("keydown", "KeyJ", "j", 74);
+                },
+                () => {
+                    sendKeyEvent("keyup", "Space", " ", 32);
+                    sendKeyEvent("keyup", "Enter", "Enter", 13);
+                    sendKeyEvent("keyup", "KeyJ", "j", 74);
+                }
+            );
+
+            // --- 2. NÚT NHẢY / BAY (ArrowUp / Space) ---
+            bindTouchButton("btn-action-jump",
+                () => {
+                    sendKeyEvent("keydown", "ArrowUp", "ArrowUp", 38);
+                    sendKeyEvent("keydown", "Space", " ", 32);
+                },
+                () => {
+                    sendKeyEvent("keyup", "ArrowUp", "ArrowUp", 38);
+                    sendKeyEvent("keyup", "Space", " ", 32);
+                }
+            );
+
+            // --- 3. CÁC NÚT CHIÊU THỨC 1..5 ---
+            const skills = [
+                { id: "btn-skill-1", code: "Digit1", key: "1", keyCode: 49 },
+                { id: "btn-skill-2", code: "Digit2", key: "2", keyCode: 50 },
+                { id: "btn-skill-3", code: "Digit3", key: "3", keyCode: 51 },
+                { id: "btn-skill-4", code: "Digit4", key: "4", keyCode: 52 },
+                { id: "btn-skill-5", code: "Digit5", key: "5", keyCode: 53 },
+            ];
+            skills.forEach(s => {
+                bindTouchButton(s.id,
+                    () => { sendKeyEvent("keydown", s.code, s.key, s.keyCode); },
+                    () => { sendKeyEvent("keyup", s.code, s.key, s.keyCode); }
+                );
+            });
+
+            // --- 4. CÁC PHÍM TIỆN ÍCH: ĐẬU THẦN [6], BẢN ĐỒ [M], MENU [Tab/Esc] ---
+            bindTouchButton("btn-aux-dau",
+                () => {
+                    sendKeyEvent("keydown", "Digit6", "6", 54);
+                    sendKeyEvent("keydown", "KeyQ", "q", 81);
+                },
+                () => {
+                    sendKeyEvent("keyup", "Digit6", "6", 54);
+                    sendKeyEvent("keyup", "KeyQ", "q", 81);
+                }
+            );
+
+            bindTouchButton("btn-aux-map",
+                () => { sendKeyEvent("keydown", "KeyM", "m", 77); },
+                () => { sendKeyEvent("keyup", "KeyM", "m", 77); }
+            );
+
+            bindTouchButton("btn-aux-menu",
+                () => {
+                    sendKeyEvent("keydown", "Tab", "Tab", 9);
+                    sendKeyEvent("keydown", "Escape", "Escape", 27);
+                },
+                () => {
+                    sendKeyEvent("keyup", "Tab", "Tab", 9);
+                    sendKeyEvent("keyup", "Escape", "Escape", 27);
+                }
+            );
+
+            // --- 5. TIỆN ÍCH: ẨN / HIỆN PHÍM ẢO ---
+            const btnToggleCtrl = document.getElementById("btn-toggle-ctrl");
+            if (btnToggleCtrl) {
+                btnToggleCtrl.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    triggerHaptic();
+                    const isVisible = mobileControls.style.display !== "none";
+                    if (isVisible) {
+                        mobileControls.style.display = "none";
+                        btnToggleCtrl.textContent = "🎮 Phím: Tắt";
+                        btnToggleCtrl.style.opacity = "0.6";
+                    } else {
+                        mobileControls.style.display = "block";
+                        btnToggleCtrl.textContent = "🎮 Phím: Bật";
+                        btnToggleCtrl.style.opacity = "1";
+                    }
+                });
+            }
+
+            // --- 6. TIỆN ÍCH: TOÀN MÀN HÌNH (FULLSCREEN) ---
+            const btnToggleFs = document.getElementById("btn-toggle-fs");
+            if (btnToggleFs) {
+                btnToggleFs.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    triggerHaptic();
+                    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                        const root = document.documentElement;
+                        if (root.requestFullscreen) root.requestFullscreen();
+                        else if (root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+                    } else {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                    }
+                    layoutSoon();
+                });
+            }
+
+            // --- 7. CẦN GẠT ANALOG JOYSTICK TOUCH HANDLER (360 ĐỘ) ---
+            const jZone = document.getElementById("joystick-zone");
+            const jBase = document.getElementById("joystick-base");
+            const jThumb = document.getElementById("joystick-thumb");
+            if (!jZone || !jBase || !jThumb) return;
+
+            let touchId = null;
+            let baseRect = null;
+            const maxRadius = 45;
+
+            function updateJoystickDirections(dx, dy) {
+                const threshold = 14;
+                const newUp = dy < -threshold;
+                const newDown = dy > threshold;
+                const newLeft = dx < -threshold;
+                const newRight = dx > threshold;
+
+                // Up / Jump
+                if (newUp && !activeDirections.up) {
+                    sendKeyEvent("keydown", "ArrowUp", "ArrowUp", 38);
+                    sendKeyEvent("keydown", "KeyW", "w", 87);
+                } else if (!newUp && activeDirections.up) {
+                    sendKeyEvent("keyup", "ArrowUp", "ArrowUp", 38);
+                    sendKeyEvent("keyup", "KeyW", "w", 87);
+                }
+
+                // Down / Crouch
+                if (newDown && !activeDirections.down) {
+                    sendKeyEvent("keydown", "ArrowDown", "ArrowDown", 40);
+                    sendKeyEvent("keydown", "KeyS", "s", 83);
+                } else if (!newDown && activeDirections.down) {
+                    sendKeyEvent("keyup", "ArrowDown", "ArrowDown", 40);
+                    sendKeyEvent("keyup", "KeyS", "s", 83);
+                }
+
+                // Left
+                if (newLeft && !activeDirections.left) {
+                    sendKeyEvent("keydown", "ArrowLeft", "ArrowLeft", 37);
+                    sendKeyEvent("keydown", "KeyA", "a", 65);
+                } else if (!newLeft && activeDirections.left) {
+                    sendKeyEvent("keyup", "ArrowLeft", "ArrowLeft", 37);
+                    sendKeyEvent("keyup", "KeyA", "a", 65);
+                }
+
+                // Right
+                if (newRight && !activeDirections.right) {
+                    sendKeyEvent("keydown", "ArrowRight", "ArrowRight", 39);
+                    sendKeyEvent("keydown", "KeyD", "d", 68);
+                } else if (!newRight && activeDirections.right) {
+                    sendKeyEvent("keyup", "ArrowRight", "ArrowRight", 39);
+                    sendKeyEvent("keyup", "KeyD", "d", 68);
+                }
+
+                activeDirections = { up: newUp, down: newDown, left: newLeft, right: newRight };
+            }
+
+            function resetJoystick() {
+                jThumb.style.transform = "translate(0px, 0px)";
+                if (activeDirections.up) { sendKeyEvent("keyup", "ArrowUp", "ArrowUp", 38); sendKeyEvent("keyup", "KeyW", "w", 87); }
+                if (activeDirections.down) { sendKeyEvent("keyup", "ArrowDown", "ArrowDown", 40); sendKeyEvent("keyup", "KeyS", "s", 83); }
+                if (activeDirections.left) { sendKeyEvent("keyup", "ArrowLeft", "ArrowLeft", 37); sendKeyEvent("keyup", "KeyA", "a", 65); }
+                if (activeDirections.right) { sendKeyEvent("keyup", "ArrowRight", "ArrowRight", 39); sendKeyEvent("keyup", "KeyD", "d", 68); }
+                activeDirections = { up: false, down: false, left: false, right: false };
+                touchId = null;
+            }
+
+            jZone.addEventListener("touchstart", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (touchId !== null) return;
+                const touch = e.changedTouches[0];
+                touchId = touch.identifier;
+                baseRect = jBase.getBoundingClientRect();
+                triggerHaptic();
+            }, { passive: false });
+
+            window.addEventListener("touchmove", function (e) {
+                if (touchId === null) return;
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    const t = e.changedTouches[i];
+                    if (t.identifier === touchId) {
+                        e.preventDefault();
+                        if (!baseRect) baseRect = jBase.getBoundingClientRect();
+                        const centerX = baseRect.left + baseRect.width / 2;
+                        const centerY = baseRect.top + baseRect.height / 2;
+                        let dx = t.clientX - centerX;
+                        let dy = t.clientY - centerY;
+                        const dist = Math.hypot(dx, dy);
+                        if (dist > maxRadius) {
+                            dx = (dx / dist) * maxRadius;
+                            dy = (dy / dist) * maxRadius;
+                        }
+                        jThumb.style.transform = `translate(${dx}px, ${dy}px)`;
+                        updateJoystickDirections(dx, dy);
+                        break;
+                    }
+                }
+            }, { passive: false });
+
+            const endJoystickTouch = function (e) {
+                if (touchId === null) return;
+                for (let i = 0; i < e.changedTouches.length; i++) {
+                    if (e.changedTouches[i].identifier === touchId) {
+                        e.preventDefault();
+                        resetJoystick();
+                        break;
+                    }
+                }
+            };
+
+            window.addEventListener("touchend", endJoystickTouch, { passive: false });
+            window.addEventListener("touchcancel", endJoystickTouch, { passive: false });
+        }
     </script>
 </body>
 </html>

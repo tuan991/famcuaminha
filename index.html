@@ -662,18 +662,28 @@
                         </div>
 
                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <!-- Chơi trực tiếp trên Safari WebGL -->
-                            <a href="play/" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4); font-size: 15px; font-weight: 800;">
-                                <i class="fa-solid fa-play"></i> CHƠI TRÊN SAFARI (KHÔNG CẦN CÀI)
+                            <!-- Chơi trực tiếp trên Safari WebGL (Bản Thuần Điện Thoại) -->
+                            <a href="play/" target="_blank" class="btn btn-primary" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.45); font-size: 15px; font-weight: 800; border: 2px solid #34d399;">
+                                <i class="fa-solid fa-gamepad"></i> CHƠI TRÊN SAFARI (THUẦN ĐIỆN THOẠI - CÓ PHÍM ẢO)
+                            </a>
+
+                            <!-- Cài 1-Click Qua Scarlet Sideload -->
+                            <a href="scarlet://install=https://famcuaminha.indevs.in/download/FCMA.ipa" class="btn btn-accent" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #e11d48, #be123c); border-color: #fb7185; font-weight: 700;">
+                                <i class="fa-solid fa-bolt"></i> Cài 1-Click Tự Động Qua App Scarlet
+                            </a>
+
+                            <!-- Cài OTA Trực Tiếp Qua Safari -->
+                            <a href="itms-services://?action=download-manifest&url=https://famcuaminha.indevs.in/manifest.plist" class="btn btn-ios" style="width: 100%; justify-content: center; font-weight: 700; border-color: #38bdf8;">
+                                <i class="fa-brands fa-apple"></i> Cài Trực Tiếp OTA (Cần Chứng Chỉ)
                             </a>
 
                             <!-- Nút Hướng Dẫn Cài iOS Tránh Lỗi Xác Minh -->
                             <button onclick="document.getElementById('iosFixModal').style.display='flex'" class="btn btn-secondary" style="width: 100%; justify-content: center; font-weight: 700; cursor: pointer; border-color: #38bdf8; color: #38bdf8;">
-                                <i class="fa-solid fa-circle-question"></i> Hướng Dẫn Cài IPA Vào Máy (3uTools)
+                                <i class="fa-solid fa-circle-question"></i> Hướng Dẫn Cài IPA Không Cần Máy Tính (Scarlet / 3uTools)
                             </button>
 
                             <!-- Tải File Gốc IPA -->
-                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-accent" style="width: 100%; justify-content: center;">
+                            <a href="download/FCMA.ipa" download="FCMA.ipa" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 13px; opacity: 0.9;">
                                 <i class="fa-solid fa-file-arrow-down"></i> Tải File Gốc FCMA.ipa (40MB)
                             </a>
 
